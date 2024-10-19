@@ -36,3 +36,10 @@ package-lock.json
 # Environment files
 .env
 .env*.local
+
+
+# Python cache
+__pycache__/
+
+# SQLite database
+database.sqlite
