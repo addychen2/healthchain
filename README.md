@@ -15,6 +15,9 @@ npm install
 npm run dev
 ```
 
+## .env Setup
+Make sure to create a .env file and fill it with the stuff from discord
+
 ## Project deployment
 
 Click the button below to deploy this example project with Vercel:
