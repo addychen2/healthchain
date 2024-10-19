@@ -1,10 +1,9 @@
-"use client";
-
 import { VoiceProvider } from "@humeai/voice-react";
 import Messages from "./Messages";
 import Controls from "./Controls";
 import StartCall from "./StartCall";
 import { ComponentRef, useRef } from "react";
+import { add_food } from "../app/API";
 
 export default function ClientComponent({
   accessToken,
@@ -17,6 +16,8 @@ export default function ClientComponent({
   // optional: use configId from environment variable
   const configId = process.env['NEXT_PUBLIC_HUME_CONFIG_ID'];
   
+  
+  
   return (
     <div
       className={
@@ -26,7 +27,7 @@ export default function ClientComponent({
       <VoiceProvider
         auth={{ type: "accessToken", value: accessToken }}
         configId={configId}
-        onMessage={() => {
+        onMessage={(message) => {
           if (timeout.current) {
             window.clearTimeout(timeout.current);
           }
@@ -41,6 +42,16 @@ export default function ClientComponent({
               });
             }
           }, 200);
+
+          console.log(message.type)
+
+          if (message.type === "assistant_message") {
+            // Log the expressions inferred
+            console.log(message)
+            // Add the food to the database
+            add_food(message);
+            console.log(message.models.prosody?.scores)
+          }
         }}
       >
         <Messages ref={ref} />
