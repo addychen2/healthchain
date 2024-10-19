@@ -3,11 +3,8 @@
 import React, { useState } from "react";
 
 const SideNav = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen] = useState(false);
 
-  const toggleSideNav = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
     <div className="flex">
@@ -38,18 +35,7 @@ const SideNav = () => {
           </nav>
         </div>
       </div>
-
-      {/* Main content */}
-      <div className="flex-1 p-6 bg-gray-100 min-h-screen">
-        <button
-          className="text-white bg-gray-800 p-2 rounded-md sm:hidden"
-          onClick={toggleSideNav}
-        >
-          {isOpen ? "Close" : "Open"} Menu
-        </button>
-        <h1 className="text-3xl font-bold">Welcome to the Dashboard</h1>
-        <p className="mt-4">This is the main content area.</p>
-      </div>
+    
     </div>
   );
 };

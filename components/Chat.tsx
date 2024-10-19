@@ -19,6 +19,7 @@ export default function ClientComponent({
   const configId = process.env['NEXT_PUBLIC_HUME_CONFIG_ID'];
   
   return (
+
     <div
       className={
         "relative grow flex flex-col mx-auto w-full overflow-hidden h-[0px]"
@@ -45,11 +46,13 @@ export default function ClientComponent({
           }, 200);
         }}
       >
+        
         <Messages ref={ref} />
         <Controls />
         <StartCall />
-        <SideNav/>
+          
       </VoiceProvider>
     </div>
+    
   );
 }

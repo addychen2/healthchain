@@ -4,7 +4,6 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { cn } from "@/utils";
-import SideNav from "@/components/SideNav";
 
 
 export const metadata: Metadata = {
@@ -23,10 +22,9 @@ export default function RootLayout({
         className={cn(
           GeistSans.variable,
           GeistMono.variable,
-          "flex flex-col min-h-screens"
+          "flex flex-col min-h-screen"
         )}
       >
-          
 
         {children}
       </body>
