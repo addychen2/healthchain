@@ -70,11 +70,12 @@ To set up the backend, follow these steps:
 3. **Navigate to the Backend Source Directory**:
   ```bash
   cd backend/src
+  pip install -r requirements.txt
   ```
 
 4. **Run the Backend Application**:
   ```bash
-  python app.py
+  python main.py
   ```
 
 This will start the backend server, and it should be running and ready to handle requests.
