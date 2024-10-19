@@ -32,3 +32,37 @@ Below are the steps to completing deployment:
 ## Support
 
 If you have questions, require assistance, or wish to engage in discussions pertaining to this starter template, [please reach out to us on Discord](https://link.hume.ai/discord).
+
+
+
+
+## Setting Up the Backend
+
+To set up the backend, follow these steps:
+
+1. **Create a Virtual Environment**:
+  ```bash
+  python3 -m venv venv
+  ```
+
+2. **Activate the Virtual Environment**:
+  - On macOS and Linux:
+    ```bash
+    source venv/bin/activate
+    ```
+  - On Windows:
+    ```bash
+    .\venv\Scripts\activate
+    ```
+
+3. **Navigate to the Backend Source Directory**:
+  ```bash
+  cd backend/src
+  ```
+
+4. **Run the Backend Application**:
+  ```bash
+  python app.py
+  ```
+
+This will start the backend server, and it should be running and ready to handle requests.
