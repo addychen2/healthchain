@@ -2,7 +2,8 @@ from app import *
 from model import *
 from flask import request, jsonify
 from datetime import date, datetime, timedelta
-from flask_jwt_extended import create_access_token, jwt_required, JWTManagerimport bcrypt
+from flask_jwt_extended import create_access_token, jwt_required, JWTManager
+import bcrypt
 
 
 
@@ -63,8 +64,7 @@ def login():
 
 @app.route('/api/logout', methods=['GET'])
 def logout():
-    # Clear the session
-    session.clear()
+
     return jsonify({'message': 'Logged out successfully'}), 200
 
 @app.route('/api/today_cal      ories/', methods=['GET'])
