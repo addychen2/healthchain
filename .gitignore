@@ -43,3 +43,6 @@ __pycache__/
 
 # SQLite database
 database.sqlite
+
+# Python virtual environment
+venv/
