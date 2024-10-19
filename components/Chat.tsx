@@ -1,3 +1,5 @@
+"use client";
+
 import { VoiceProvider } from "@humeai/voice-react";
 import Messages from "./Messages";
 import Controls from "./Controls";
@@ -45,11 +47,11 @@ export default function ClientComponent({
 
           console.log(message.type)
 
-          if (message.type === "assistant_message") {
+          if (message.type === "user_message") {
             // Log the expressions inferred
-            console.log(message)
+            console.log(message.message.content)
             // Add the food to the database
-            add_food(message);
+            add_food(message.message.content);
             console.log(message.models.prosody?.scores)
           }
         }}

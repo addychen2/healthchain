@@ -63,6 +63,12 @@ class calTable(db.Model):
 	calories = db.Column(db.Integer, nullable = False)
 	date = db.Column(db.Date, nullable = False)
 
+class foodTable(db.Model):
+	id = db.Column(db.Integer, primary_key = True)
+	food_name = db.Column(db.String(100), nullable = False)
+	date = db.Column(db.Date, nullable = False)
+
+
 
 class calTarget(db.Model):
 	id = db.Column(db.Integer, primary_key = True)

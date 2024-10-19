@@ -2,13 +2,18 @@ import os
 import sys
 from flask_jwt_extended import create_access_token, jwt_required, JWTManager
 from flask import *
+from flask_cors import CORS
 from flask_sqlalchemy import *
+
 
 # Instantiate the application and define settings.
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.sqlite"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.secret_key = os.urandom(32)
+
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
+
 
 ## Load the database.
 db = SQLAlchemy(app)
