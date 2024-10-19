@@ -80,7 +80,7 @@ To set up the backend, follow these steps:
 
 5. **Run the Backend Application**:
   ```bash
-  python app.py
+  python main.py
   ```
 
 This will start the backend server, and it should be running and ready to handle requests.
