@@ -5,6 +5,7 @@ import Messages from "./Messages";
 import Controls from "./Controls";
 import StartCall from "./StartCall";
 import { ComponentRef, useRef } from "react";
+import SideNav from "./SideNav";
 
 export default function ClientComponent({
   accessToken,
@@ -24,6 +25,7 @@ export default function ClientComponent({
       }
     >
       <VoiceProvider
+        
         auth={{ type: "accessToken", value: accessToken }}
         configId={configId}
         onMessage={() => {
@@ -46,6 +48,7 @@ export default function ClientComponent({
         <Messages ref={ref} />
         <Controls />
         <StartCall />
+        <SideNav/>
       </VoiceProvider>
     </div>
   );

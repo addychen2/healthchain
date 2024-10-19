@@ -4,10 +4,12 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { cn } from "@/utils";
+import SideNav from "@/components/SideNav";
+
 
 export const metadata: Metadata = {
-  title: "Hume AI - EVI - Next.js Starter",
-  description: "A Next.js starter using Hume AI's Empathic Voice Interface",
+  title: "APP TITLE",
+  description: "AI DIETARY TRACKER",
 };
 
 export default function RootLayout({
@@ -21,10 +23,11 @@ export default function RootLayout({
         className={cn(
           GeistSans.variable,
           GeistMono.variable,
-          "flex flex-col min-h-screen"
+          "flex flex-col min-h-screens"
         )}
       >
-        <Nav />
+          
+
         {children}
       </body>
     </html>
