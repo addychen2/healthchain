@@ -17,6 +17,13 @@ npm run dev
 
 ## .env Setup
 Make sure to create a .env file and fill it with the stuff from discord
+```
+HUME_API_KEY=
+HUME_SECRET_KEY=
+NEXT_PUBLIC_HUME_CONFIG_ID=
+
+GEMINI_API_KEY=
+```
 
 ## Project deployment
 
@@ -33,7 +40,12 @@ Below are the steps to completing deployment:
 
 If you have questions, require assistance, or wish to engage in discussions pertaining to this starter template, [please reach out to us on Discord](https://link.hume.ai/discord).
 
+## Gemini Setup
+```
+pip3/pip install -q -U google-generativeai
 
+pip3/pip install python-dotenv
+```
 
 
 ## Setting Up the Backend
