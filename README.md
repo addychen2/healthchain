@@ -9,6 +9,15 @@
 
 This project features a sample implementation of Hume's [Empathic Voice Interface](https://hume.docs.buildwithfern.com/docs/empathic-voice-interface-evi/overview) using Hume's React SDK. Here, we have a simple EVI that uses the Next.js App Router.
 
+## Project Local Run Instructions
+```
+npm install
+npm run dev
+```
+
+## .env Setup
+Make sure to create a .env file and fill it with the stuff from discord
+
 ## Project deployment
 
 Click the button below to deploy this example project with Vercel:
