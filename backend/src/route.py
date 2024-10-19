@@ -2,8 +2,7 @@ from app import *
 from model import *
 from flask import request, jsonify
 from datetime import date, datetime, timedelta
-
-#from flask_login import current_user, login_required
+from flask_jwt_extended import create_access_token, jwt_required, JWTManagerimport bcrypt
 
 
 
@@ -40,36 +39,35 @@ def register():
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    # Get the login credentials from the request
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
 
-    # Validate the request data
     if not email or not password:
         return jsonify({'error': 'Please provide both email and password'}), 400
 
-    # Find the user in the database
     user = User.query.filter_by(email=email).first()
 
-    # Check if user exists and verify password
     if user and bcrypt.checkpw(password.encode('utf-8'), user.password):
-        # Store user info in the session
-        session['user_id'] = user.id
-        session['user_name'] = user.name
-        session['logged_in'] = True
+        # Create a JWT token
+        access_token = create_access_token(identity={'user_id': user.id, 'name': user.name})
         
-        return jsonify({'message': 'Login successful', 'user_id': user.id}), 200
+        return jsonify({
+            'message': 'Login successful',
+            'access_token': access_token,
+            'user_id': user.id
+        }), 200
     else:
         return jsonify({'error': 'Invalid email or password'}), 401
     
+
 @app.route('/api/logout', methods=['GET'])
 def logout():
     # Clear the session
     session.clear()
     return jsonify({'message': 'Logged out successfully'}), 200
 
-@app.route('/api/today_calories/', methods=['GET'])
+@app.route('/api/today_cal      ories/', methods=['GET'])
 def today():
     # Get the JSON data from the request body
     data = request.get_json()
