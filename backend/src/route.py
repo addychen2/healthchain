@@ -3,10 +3,9 @@ from model import *
 from flask import request, jsonify
 from datetime import date, datetime, timedelta
 from flask_jwt_extended import create_access_token, jwt_required, JWTManager
+
 import bcrypt
-
-
-
+from gemini import parse_calories
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -67,7 +66,7 @@ def logout():
 
     return jsonify({'message': 'Logged out successfully'}), 200
 
-@app.route('/api/today_cal      ories/', methods=['GET'])
+@app.route('/api/today_calories/', methods=['GET'])
 def today():
     # Get the JSON data from the request body
     data = request.get_json()
@@ -97,6 +96,35 @@ def today():
         'date': today_date.strftime('%Y-%m-%d')
     })
 
+@app.route('/api/log_food', methods=['POST'])
+def log_food():
+    data = request.get_json()
+
+    parsed_data = parse_calories(data)
+
+    print("data: ")
+    print(parsed_data)
+
+    # Extract the necessary fields
+    food_name = parsed_data[0]['food_name']
+    # calories = parsed_data[0]['calories']
+
+    # Basic validation to ensure all necessary data is provided
+    if not all([food_name]):
+        return jsonify({'error': 'Missing required fields'}), 400
+
+    try:
+        # Create a new calTable entry
+        new_entry = foodTable(food_name=food_name, date=date.today())
+
+        # Add the new entry to the session and commit it to the database
+        db.session.add(new_entry)
+        db.session.commit()
+
+        return jsonify({'message': 'Food entry logged successfully'}), 201
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 
 @app.route('/api/add_food', methods=['POST'])

@@ -70,6 +70,7 @@ To set up the backend, follow these steps:
 3. **Navigate to the Backend Source Directory**:
   ```bash
   cd backend/src
+  pip install -r requirements.txt
   ```
 
 4. **Install dependencies**
