@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/utils"; // Assuming you have a utility for conditional class names
-import Cookies from "js-cookie"; // Using js-cookie to manage cookies
+// @ts-ignore
+import Cookies from "js-cookie";
 
 const Login = () => {
   const [formData, setFormData] = useState({

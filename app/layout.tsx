@@ -6,7 +6,7 @@ import { Nav } from "@/components/Nav";
 import { cn } from "@/utils";
 
 export const metadata: Metadata = {
-  title: "APP NAME",
+  title: "HealthChain",
   description: "",
 };
 

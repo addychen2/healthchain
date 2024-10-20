@@ -60,26 +60,28 @@ export default function HeaderAndChat({ accessToken }: { accessToken: string }) 
           }, 200);
 
           console.log(message.type)
-
-          if(message.type === "assistant_message") {
-            console.log(message.message.content)
-            if (message.message.content.includes("Adding") && message.message.content.includes("calories")) {
-              add_food_uid(message.message.content);
-              console.log("Food added to database")
-            }
-            if (message.message.content.includes("emoving") ||  message.message.content.includes("eleting")) {
-              remove_food_uid(message.message.content);
-              console.log("Food removed from database")
-            }
-            if(message.message.content.includes("etting") && message.message.content.includes("limit") && message.message.content.includes("calorie")) {
-              set_limit(message.message.content);
-              console.log("Limit set");
-            }
-            if(message.message.content.includes("etting") && message.message.content.includes("limit") && message.message.content.includes("protein")) {
-              set_limit_protein(message.message.content);
-              console.log("Limit set");
+          if (message.type === "assistant_message") {
+            const content = message.message.content; // Extract content
+            if (content !== undefined) { // Check if content is defined
+              if (content.includes("Adding") && content.includes("calories")) {
+                add_food_uid(content);
+                console.log("Food added to database");
+              }
+              if (content.includes("emoving") || content.includes("eleting")) {
+                remove_food_uid(content);
+                console.log("Food removed from database");
+              }
+              if (content.includes("etting") && content.includes("limit") && content.includes("calorie")) {
+                set_limit(content);
+                console.log("Limit set");
+              }
+              if (content.includes("etting") && content.includes("limit") && content.includes("protein")) {
+                set_limit_protein(content);
+                console.log("Limit set");
+              }
             }
           }
+          
 
           get_all_food()
 

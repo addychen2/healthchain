@@ -1,0 +1,22 @@
+services:
+  frontend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: flexbox-frontend:latest  # Tag for the frontend image
+    ports:
+      - "80:3000"  # Map host port 80 to container port 3000
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: flexbot-backend:latest  # Tag for the backend image
+    ports:
+      - "8080:8080"  # Keep the backend port mapping as it is
+    env_file:
+      - .venv
+    environment:
+      FLASK_ENV: production
