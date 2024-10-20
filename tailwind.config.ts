@@ -25,6 +25,7 @@ const config = {
     },
     extend: {
       height: {
+        '102': '28rem',
         '108': '30rem',
         '128': '32rem',
         '144': '36rem',
