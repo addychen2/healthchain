@@ -8,7 +8,7 @@ import Github from "./logos/GitHub";
 import pkg from '@/package.json';
 
 export const Nav = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
 
   useLayoutEffect(() => {
     const el = document.documentElement;
@@ -16,7 +16,7 @@ export const Nav = () => {
     if (el.classList.contains("dark")) {
       setIsDarkMode(true);
     } else {
-      setIsDarkMode(false);
+      setIsDarkMode(true);
     }
   }, []);
 
@@ -26,11 +26,17 @@ export const Nav = () => {
     setIsDarkMode((prev) => !prev);
   };
 
+  if (isDarkMode) {
+    toggleDark();
+  }
+
   return (
+    
     <div
       className={
         "px-4 py-2 flex items-center h-14 z-50 bg-card border-b border-border"
       }
+  
     >
       <div>
         <HumeLogo className={"h-5 w-auto"} />
@@ -64,9 +70,10 @@ export const Nav = () => {
               <Moon className={"size-4"} />
             )}
           </span>
-          <span>{isDarkMode ? "Light" : "Dark"} Mode</span>
+          <span>{isDarkMode ? "Dark" : "Dark"} Mode</span>
         </Button>
       </div>
     </div>
   );
+  
 };
