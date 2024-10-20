@@ -1,6 +1,6 @@
-# Stage 1: Build the Next.js app
+# Stage 1: Build the React app
 FROM node:18 AS build
-WORKDIR /app
+WORKDIR /app  # Set the working directory to /app
 
 # Copy package.json and package-lock.json
 COPY package*.json ./
@@ -11,15 +11,12 @@ RUN npm install
 # Copy the rest of the application code
 COPY ./ ./
 
-# Build the Next.js app
+# Build the React app
 RUN npm run build
 
-# Stage 2: Serve the Next.js app with Nginx
+# Stage 2: Serve the React app with Nginx
 FROM nginx:alpine
-
-# Copy the Next.js build output to Nginx's html directory
-COPY --from=build /app/.next /usr/share/nginx/html
-COPY --from=build /app/public /usr/share/nginx/html
+COPY --from=build /app/build /usr/share/nginx/html 
 
 # Expose the port on which the app will run
 EXPOSE 80

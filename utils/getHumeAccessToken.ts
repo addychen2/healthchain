@@ -1,3 +1,4 @@
+import 'server-only';
 
 import { fetchAccessToken } from "hume";
 
