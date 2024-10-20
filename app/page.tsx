@@ -1,4 +1,5 @@
 
+import { Nav } from "@/components/Nav";
 import SideNav from "@/components/SideNav";
 import Card from "@/components/ui/Card";
 import { getHumeAccessToken } from "@/utils/getHumeAccessToken";
@@ -10,6 +11,7 @@ import dynamic from "next/dynamic";
 const Chat = dynamic(() => import("@/components/Chat"), {
   ssr: true,
 });
+
 
 
 
@@ -29,6 +31,9 @@ export default async function Page() {
     
     <div className="grow flex flex-row ">
       <div className="flex">
+        <div className="hidden">
+          <Nav/>
+        </div>
         <SideNav/>
       </div>
 
