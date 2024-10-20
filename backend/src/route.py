@@ -34,7 +34,9 @@ def register():
         
         # Create a new target entry for the user
         new_target = calTarget(user_id=new_user.id, cal_target=2000)  # Default target value
+        new_target_protein = proTarget(user_id=new_user.id, pro_target=100)
         db.session.add(new_target)
+        db.session.add(new_target_protein)
         db.session.commit()
         
     except Exception as e:
@@ -91,9 +93,9 @@ def today():
     today_date = date.today()
 
     # Query calTable to get the total calories for today
-    total_calories = db.session.query(db.func.sum(calTable.calories))\
+    total_calories = db.session.query(db.func.sum(proTable.calories))\
         .filter_by(user_id=user_id)\
-        .filter(calTable.date == today_date)\
+        .filter(proTable.date == today_date)\
         .scalar()
 
     # If no calories have been logged, return 0
@@ -102,6 +104,38 @@ def today():
     return jsonify({
         'user_id': user_id,
         'total_calories': total_calories,
+        'date': today_date.strftime('%Y-%m-%d')
+    })
+
+@app.route('/api/today_protein/', methods=['GET', 'POST'])
+def today_protein():
+    # Try to get the user_id from the query parameters first
+    user_id = request.args.get('user_id')
+
+    # If user_id is not in the query parameters, try to get it from JSON body
+    if not user_id and request.is_json:
+        data = request.get_json()
+        user_id = data.get('user_id')
+
+    # Check if the user_id was provided
+    if not user_id:
+        return jsonify({'error': 'User ID is required'}), 400
+
+    # Get today's date
+    today_date = date.today()
+
+    # Query calTable to get the total calories for today
+    total_protein = db.session.query(db.func.sum(proTable.protein))\
+        .filter_by(user_id=user_id)\
+        .filter(proTable.date == today_date)\
+        .scalar()
+
+    # If no calories have been logged, return 0
+    total_protein = total_protein if total_protein else 0
+
+    return jsonify({
+        'user_id': user_id,
+        'total_protein': total_protein,
         'date': today_date.strftime('%Y-%m-%d')
     })
 
@@ -152,14 +186,16 @@ def add_food():
     # Extract the necessary fields
     food_name = parsed_data[0]['food_name']
     calories = parsed_data[0]['calories']
+    protein = parsed_data[0]['protein']
     date_str = data.get('date')  # Date is expected in 'YYYY-MM-DD' format
 
     print(food_name)
     print(calories)
+    print(protein)
     print(date_str)
     print(user_id)
     # Basic validation to ensure all necessary data is provided
-    if not all([user_id, food_name, calories, date_str]):
+    if not all([user_id, food_name, calories, protein, date_str]):
         return jsonify({'error': 'Missing required fields'}), 400
 
     try:
@@ -167,7 +203,7 @@ def add_food():
         chosen_date = datetime.strptime(date_str, '%Y-%m-%d').date()
 
         # Create a new calTable entry
-        new_entry = calTable(user_id=user_id, food_name=food_name, calories=calories, date=chosen_date)
+        new_entry = proTable(user_id=user_id, food_name=food_name, calories=calories, protein=protein, date=chosen_date)
 
         # Add the new entry to the session and commit it to the database
         db.session.add(new_entry)
@@ -197,7 +233,7 @@ def remove_food():
         remove_count = 0
 
         # Query to find food entries for the specified user, ordered by id descending
-        food_entries = db.session.query(calTable).filter_by(user_id=user_id).order_by(calTable.id.desc()).all()
+        food_entries = db.session.query(proTable).filter_by(user_id=user_id).order_by(proTable.id.desc()).all()
 
         # Remove food entries in descending order
         for food_entry in food_entries:
@@ -378,6 +414,37 @@ def get_target_calories():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
+@app.route('/api/get_target_protein', methods=['GET', 'POST'])
+def get_target_protein():
+    # Try to get the user_id from the query parameters first
+    user_id = request.args.get('user_id')
+
+    # If user_id is not in the query parameters, try to get it from JSON body
+    if not user_id and request.is_json:
+        data = request.get_json()
+        user_id = data.get('user_id')
+
+    # Basic validation to ensure the user_id is provided
+    if not user_id:
+        return jsonify({'error': 'User ID is required'}), 400
+
+    try:
+        # Query the database for the user's target calories
+        target_entry = proTarget.query.filter_by(user_id=user_id).first()
+
+        if target_entry:
+            # Return the target calories if found
+            return jsonify({
+                'user_id': user_id,
+                'pro_target': target_entry.pro_target
+            }), 200
+        else:
+            # Return an error if no target entry is found for the user
+            return jsonify({'error': 'Target protein not found for the user'}), 404
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
 
 
 @app.route('/api/get_all_food', methods=['GET'])
@@ -409,7 +476,7 @@ def get_all_food_uid():
         return jsonify({'error': 'user_id is required'}), 400
 
     # Query the foodTable to get all food entries for the specified user_id
-    food_entries = calTable.query.filter_by(user_id=user_id).all()
+    food_entries = proTable.query.filter_by(user_id=user_id).all()
 
     # Prepare a list to store the results
     all_food = []
@@ -419,6 +486,7 @@ def get_all_food_uid():
         all_food.append({
             'food_name': entry.food_name,
             'calories': entry.calories,
+            'protein': entry.protein,
             'date': entry.date.strftime('%Y-%m-%d')
         })
 
@@ -433,7 +501,7 @@ def get_all_food_uid():
 @app.route('/api/all_food_calories', methods=['GET'])
 def get_all_food_calories():
     # Query the foodTable to get all food entries
-    food_entries = calTable.query.all()
+    food_entries = proTable.query.all()
 
     # Prepare a list to store the results
     all_food_calories = 0

@@ -284,6 +284,31 @@ export async function daily_calories() {
   }
 }
 
+export async function daily_protein() {
+  try {
+    // Retrieve user_id from the cookie
+    const userId = Cookies.get("user_id");
+
+    const response = await fetch(`${ADDRESS}/api/today_protein/?user_id=${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('API response:', data); // Debug log
+    return data; // Return the data here
+  } catch (error) {
+    console.error('Error fetching meals:', error);
+    throw error;
+  }
+}
+
 export async function get_target_calories() {
   try {
     // Retrieve user_id from the cookie
@@ -309,4 +334,27 @@ export async function get_target_calories() {
   }
 }
 
+export async function get_target_protein() {
+  try {
+    // Retrieve user_id from the cookie
+    const userId = Cookies.get("user_id");
 
+    const response = await fetch(`${ADDRESS}/api/get_target_protein?user_id=${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('API response:', data); // Debug log
+    return data; // Return the data here
+  } catch (error) {
+    console.error('Error fetching target protein:', error);
+    throw error;
+  }
+}
