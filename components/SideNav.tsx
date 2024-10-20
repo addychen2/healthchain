@@ -9,7 +9,7 @@ const SideNav = () => {
 
 
   return (
-    <div className="flex max-h-screen justify-stretch">
+    <div className="flex h-dvh justify-stretch">
       {/* SideNav */}
       <div
         className={`flex top-0 left-0 w-50 bg-diet-green text-black  justify-center  transition-transform transform ${

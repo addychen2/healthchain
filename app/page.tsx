@@ -19,10 +19,6 @@ const Chat = dynamic(() => import("@/components/Chat"), {
 export default async function Page() {
   const accessToken = await getHumeAccessToken();
 
-  {
-
-    
-  }
   
   if (!accessToken) {
     throw new Error();
@@ -30,22 +26,23 @@ export default async function Page() {
 
   return (
     
-    <div className="grow flex flex-row ">
-      <div className="flex">
+    <div className="grow flex flex-row h-screen ">
+      <div className="grow flex flex-col h-screen">
         <div className="hidden">
           <Nav/>
         </div>
         <SideNav/>
       </div>
 
-      <div className=" grow flex-col  h-max inset-0">
+      <div className=" grow flex-col  h-max inset-0 ">
         <h1 className="text-7xl text-white font-sans text-center content-end h-96  ">
           Share Your Meals And We'll Track 'Em
         </h1>
         
           
-
-        <Chat accessToken={accessToken} />
+        <div className="overflow-y-auto scrollbar-hide md:scrollbar-default snap-y snap-end">
+          <Chat accessToken={accessToken} />
+        </div>
         
         
       </div>
@@ -56,14 +53,7 @@ export default async function Page() {
 
         <CalorieCard />
 
-
-        
       </div>
-
-  
-          
-
-      
     </div>
   );
 }
