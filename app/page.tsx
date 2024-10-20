@@ -33,8 +33,8 @@ export default async function Page() {
       </div>
 
       <div className=" grow flex-col  h-max inset-0">
-        <h1 className="text-7xl font-sans text-center content-end h-96  ">
-          Share your Meals and We'll Track 'em
+        <h1 className="text-7xl text-white font-sans text-center content-end h-96  ">
+          Share Your Meals And We'll Track 'Em
         </h1>
         
           
