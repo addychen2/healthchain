@@ -255,13 +255,13 @@ def remove_food():
 
 
     
-@app.route('/api/weekly_calories', methods=['GET'])
+@app.route('/api/weekly_calories', methods=['GET', 'POST'])
 def weekly_calories():
 
-    data = request.get_json()
+    user_id = request.args.get('user_id')
 
     # Get the user ID from the query parameters
-    user_id = data.get('user_id')
+    # user_id = data.get('user_id')
 
     # Validate that user_id is provided
     if not user_id:
@@ -279,9 +279,9 @@ def weekly_calories():
             day = today - timedelta(days=i)
 
             # Query calTable for the total calories for the current day and user
-            total_calories = db.session.query(db.func.sum(calTable.calories))\
+            total_calories = db.session.query(db.func.sum(proTable.calories))\
                 .filter_by(user_id=user_id)\
-                .filter(calTable.date == day)\
+                .filter(proTable.date == day)\
                 .scalar()
 
             # If no calories were logged for this day, return 0
@@ -297,6 +297,48 @@ def weekly_calories():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+
+@app.route('/api/weekly_protein', methods=['GET', 'POST'])
+def weekly_protein():
+    # Validate that user_id is provided
+    user_id = request.args.get('user_id')
+
+    if not user_id:
+        return jsonify({'error': 'User ID is required'}), 400
+
+    try:
+        # Get today's date
+        today = datetime.today().date()
+
+        # Prepare an empty list to store the result for each of the last 7 days
+        daily_protein = []
+
+        # Iterate over the past 7 days (from today back to 6 days ago)
+        for i in range(7):
+            day = today - timedelta(days=i)
+
+            # Query proTable for the total protein for the current day and user
+            total_protein = db.session.query(db.func.sum(proTable.protein))\
+                .filter_by(user_id=user_id)\
+                .filter(proTable.date == day)\
+                .scalar()
+
+            # If no protein was logged for this day, return 0
+            total_protein = total_protein if total_protein else 0
+
+            # Add the result for this day to the list
+            daily_protein.append({
+                'date': day.strftime('%Y-%m-%d'),
+                'total_protein': total_protein  # Ensure consistency in key naming
+            })
+
+        return jsonify({'user_id': user_id, 'daily_protein': daily_protein}), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
     
 @app.route('/api/set_target_calories', methods=['POST'])
 def set_target_calories():
