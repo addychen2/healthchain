@@ -3,7 +3,7 @@ const ADDRESS = "http://localhost:8080";
 
 export async function add_food(food) {
     try {
-        const response = await fetch(ADDRESS + '/add_food', {
+        const response = await fetch(ADDRESS + '/api/log_food', {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

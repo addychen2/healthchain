@@ -17,6 +17,13 @@ npm run dev
 
 ## .env Setup
 Make sure to create a .env file and fill it with the stuff from discord
+```
+HUME_API_KEY=
+HUME_SECRET_KEY=
+NEXT_PUBLIC_HUME_CONFIG_ID=
+
+GEMINI_API_KEY=
+```
 
 ## Project deployment
 
@@ -32,3 +39,49 @@ Below are the steps to completing deployment:
 ## Support
 
 If you have questions, require assistance, or wish to engage in discussions pertaining to this starter template, [please reach out to us on Discord](https://link.hume.ai/discord).
+
+## Gemini Setup
+```
+pip3/pip install -q -U google-generativeai
+
+pip3/pip install python-dotenv
+```
+
+
+## Setting Up the Backend
+
+To set up the backend, follow these steps:
+
+1. **Create a Virtual Environment**:
+  ```bash
+  python3 -m venv venv
+  ```
+
+2. **Activate the Virtual Environment**:
+  - On macOS and Linux:
+    ```bash
+    source venv/bin/activate
+    ```
+  - On Windows:
+    ```bash
+    .\venv\Scripts\activate
+    ```
+
+3. **Navigate to the Backend Source Directory**:
+  ```bash
+  cd backend/src
+  pip install -r requirements.txt
+  ```
+
+4. **Install dependencies**
+
+```bash
+  pip install -r requirements.txt
+  ```
+
+5. **Run the Backend Application**:
+  ```bash
+  python main.py
+  ```
+
+This will start the backend server, and it should be running and ready to handle requests.
