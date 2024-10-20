@@ -14,6 +14,7 @@ const config = {
     fontFamily: {
       'sans': ['var(--font-geist-sans)', ...defaultTheme.fontFamily.sans],
       'mono': ['var(--font-geist-mono)', ...defaultTheme.fontFamily.mono],
+
     },
     container: {
       center: true,
@@ -23,6 +24,14 @@ const config = {
       },
     },
     extend: {
+      height: {
+        '128': '32rem',
+        '144': '36rem',
+        '160': '40rem',
+        '176': '44rem',
+        '192': '48rem',
+
+      },
       colors: {
         'hume-orange': '#FFFCF8',
         'navbar-white': '#E8E7E7',

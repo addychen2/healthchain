@@ -14,11 +14,11 @@ const Messages = forwardRef<
   return (
     <motion.div
       layoutScroll
-      className={"grow rounded-md  p-4"}
+      className={"grow rounded-md h-screen p-4"}
       ref={ref}
     >
       <motion.div
-        className={"max-w-2xl mx-auto w-full flex flex-col gap-4 pb-24"}
+        className={"max-w-2xl mx-auto w-full  h-24 py-4  my-auto flex flex-col gap-4 pb-24"}
       >
         <AnimatePresence mode={"popLayout"}>
           {messages.map((msg, index) => {
