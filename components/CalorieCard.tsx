@@ -66,16 +66,16 @@ const CalorieCard: React.FC = () => {
   useEffect(() => {
     fetchCalorieData();
 
-    // Set up event listener for foodAdded event
-    const handleFoodAdded = () => {
-      console.log('Food added event received, refreshing calorie data');
+    // Set up event listener for foodChange event
+    const handleFoodChange = () => {
+      console.log('Food change event received, refreshing calorie data');
       fetchCalorieData();
     };
-    window.addEventListener('foodAdded', handleFoodAdded);
+    window.addEventListener('foodChange', handleFoodChange);
 
     // Clean up the event listener on component unmount
     return () => {
-      window.removeEventListener('foodAdded', handleFoodAdded);
+      window.removeEventListener('foodChange', handleFoodChange);
     };
   }, [fetchCalorieData]);
 
