@@ -5,7 +5,7 @@ from datetime import date, datetime, timedelta
 from flask_jwt_extended import create_access_token, jwt_required, JWTManager
 
 import bcrypt
-from gemini import parse_calories, parse_removal
+from gemini import parse_calories, parse_removal, calorie_limit
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -183,8 +183,6 @@ def add_food():
     # Extract the necessary fields
     user_id = data.get('user_id')
 
-
-
     # Extract the necessary fields
     food_name = parsed_data[0]['food_name']
     calories = parsed_data[0]['calories']
@@ -311,6 +309,7 @@ def set_target_calories():
 
     # Basic validation to ensure all necessary data is provided
     if not all([user_id, cal_target]):
+        print("Missing required fields")
         return jsonify({'error': 'Missing required fields'}), 400
 
     try:
@@ -331,7 +330,56 @@ def set_target_calories():
         return jsonify({'message': 'Target calories set successfully'}), 201
 
     except Exception as e:
+        print("Error occurred: ", e)
         return jsonify({'error': str(e)}), 500
+
+    
+
+
+@app.route('/api/set_target_calories_ai', methods=['POST'])
+def set_target_calories_ai():
+    print("Inside set_target_calories_ai")
+    data = request.get_json()
+    user_id = data.get('user_id')
+
+    print(data)
+    parsed_data = calorie_limit(data)
+
+    print("parsed data: ")
+    print(parsed_data)
+
+    # Extract the necessary fields
+    cal_target = parsed_data[0]['limit']
+
+    print(cal_target)
+
+    # Basic validation to ensure all necessary data is provided
+
+    if not all([user_id, cal_target]):
+        print("Missing required fields")
+        return jsonify({'error': 'Missing required fields'}), 400
+    
+    try:
+        # Check if a target for this user already exists
+        target_entry = calTarget.query.filter_by(user_id=user_id).first()
+
+        if target_entry:
+            # Update the existing entry if it exists
+            target_entry.cal_target = cal_target
+        else:
+            # Create a new entry if one doesn't exist
+            target_entry = calTarget(user_id=user_id, cal_target=cal_target)
+            db.session.add(target_entry)
+
+        # Commit the changes to the database
+        db.session.commit()
+
+        return jsonify({'message': 'Target calories set successfully'}), 201
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+
 
 
 

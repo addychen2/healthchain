@@ -76,6 +76,36 @@ export async function add_food_uid(food) {
   }
 }
 
+export async function set_limit(food) {
+  try {
+    // Retrieve user_id from the cookie
+    const userId = Cookies.get("user_id");
+    const payload = {
+      food,
+      user_id: userId,
+    };
+
+    const response = await fetch(`${ADDRESS}/api/set_target_calories_ai`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+  
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  
+    const data = await response.json();
+    console.log('API response:', data); // Debug log
+    return data; // Return the data here
+  
+  } catch (error) {
+    console.error('Error fetching target calories:', error);
+    throw error;
+  }
+  }
 
 export async function remove_food_uid(food){
   try{
