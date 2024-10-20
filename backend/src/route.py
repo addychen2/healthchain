@@ -50,7 +50,7 @@ def login():
 
     if user and bcrypt.checkpw(password.encode('utf-8'), user.password):
         # Create a JWT token
-        access_token = create_access_token(identity={'user_id': user.id, 'name': user.name})
+        access_token = create_access_token(identity={'user_id': user.id, 'name': user.username})
         
         return jsonify({
             'message': 'Login successful',
@@ -135,13 +135,24 @@ def log_food():
 @app.route('/api/add_food', methods=['POST'])
 def add_food():
     data = request.get_json()
+    parsed_data = parse_calories(data)
+    print("parsed data: ")
+    print(parsed_data)
 
     # Extract the necessary fields
     user_id = data.get('user_id')
-    food_name = data.get('food_name')
-    calories = data.get('calories')
+
+
+
+    # Extract the necessary fields
+    food_name = parsed_data[0]['food_name']
+    calories = parsed_data[0]['calories']
     date_str = data.get('date')  # Date is expected in 'YYYY-MM-DD' format
 
+    print(food_name)
+    print(calories)
+    print(date_str)
+    print(user_id)
     # Basic validation to ensure all necessary data is provided
     if not all([user_id, food_name, calories, date_str]):
         return jsonify({'error': 'Missing required fields'}), 400
