@@ -14,7 +14,7 @@ const Messages = forwardRef<
   return (
     <motion.div
       layoutScroll
-      className={"grow rounded-md h-screen p-4"}
+      className={"grow rounded-md darkMode h-screen p-4"}
       ref={ref}
     >
       <motion.div

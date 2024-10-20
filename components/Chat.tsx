@@ -5,7 +5,7 @@ import Messages from "./Messages";
 import Controls from "./Controls";
 import StartCall from "./StartCall";
 import { ComponentRef, useRef } from "react";
-import { add_food, get_all_food, add_food_uid } from '../app/API';
+import { add_food, get_all_food, add_food_uid, remove_food_uid, set_limit } from '../app/API';
 
 export default function ClientComponent({
   accessToken,
@@ -21,7 +21,7 @@ export default function ClientComponent({
   return (
     <div
       className={
-        "flex flex-col content-center mx-auto w-full max-h-24"
+        "flex darkMode flex-col content-center mx-auto w-full max-h-24"
       }
     >
       <VoiceProvider
@@ -51,6 +51,15 @@ export default function ClientComponent({
               add_food_uid(message.message.content);
               console.log("Food added to database")
             }
+            if (message.message.content.includes("emoving") ||  message.message.content.includes("eleting")) {
+              remove_food_uid(message.message.content);
+              console.log("Food removed from database")
+            }
+            if(message.message.content.includes("etting") && message.message.content.includes("limit") && message.message.content.includes("calorie")) {
+              set_limit(message.message.content);
+              console.log("Limit set");
+            }
+
 
           }
 
