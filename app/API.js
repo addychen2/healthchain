@@ -1,8 +1,15 @@
 const ADDRESS = "http://localhost:8080";
 import Cookies from "js-cookie";
 
+let refreshCallback = null;
+
+export function setRefreshCallback(callback) {
+  refreshCallback = callback;
+}
+
 export async function add_food(food) {
     try {
+        console.log('Adding food:', food);
         const response = await fetch(ADDRESS + '/api/log_food', {
         method: "POST",
         headers: {
@@ -16,11 +23,15 @@ export async function add_food(food) {
         }
     
         const data = await response.json();
-        console.log('API response:', data); // Debug log
-
-        return data; // Return the data here
+        console.log('Food added successfully:', data);
+        
+        // Dispatch a custom event after successfully adding food
+        window.dispatchEvent(new CustomEvent('foodAdded'));
+        console.log("Food added event emitted");
+        
+        return data;
     } catch (error) {
-        console.error('Error fetching AI result:', error);
+        console.error('Error adding food:', error);
         throw error;
     }
 }
@@ -55,6 +66,9 @@ export async function add_food_uid(food) {
 
     const data = await response.json();
     console.log('API response:', data); // Debug log
+    // Dispatch a custom event after successfully adding food
+    window.dispatchEvent(new CustomEvent('foodAdded'));
+    console.log("Food added event emitted");
     return data; // Return the data here
   } catch (error) {
     console.error('Error fetching AI result:', error);
@@ -86,8 +100,9 @@ export async function get_all_food(){
 }
 }
 
-export async function all_food_calories(){
+export async function all_food_calories() {
   try {
+    console.log('Fetching all food calories...');
     const response = await fetch(ADDRESS + '/api/all_food_calories', {
     method: "GET",
     headers: {
@@ -100,12 +115,12 @@ export async function all_food_calories(){
     }
 
     const data = await response.json();
-    console.log('API response:', data); // Debug log
-    return data; // Return the data here
-} catch (error) {
-    console.error('Error fetching AI result:', error);
+    console.log('All food calories data:', data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching all food calories:', error);
     throw error;
-}
+  }
 }
 
 export async function login(email, password) {
