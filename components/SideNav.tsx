@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState } from "react";
+import Link from "next/link";
 
 const SideNav = () => {
   const [isOpen] = useState(false);
@@ -17,19 +18,16 @@ const SideNav = () => {
         <div className="p-4">
           <h2 className="text-2xl font-bold">APP NAME</h2>
           <nav className="mt-10">
-            <a href="#" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-white">
+            <a href="/" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-white">
               Dashboard
             </a>
-            <a href="#" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-white">
-              Calendar
-            </a>
-            <a href="#" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-white">
-              Chat History
-            </a>
-            <a href="#" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-white">
+            <Link href="/meal-history" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-white">
+              Meal History
+            </Link>
+            <a href="/settings" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-white">
               Settings
             </a>
-            <a href="#" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-white">
+            <a href="/home" className="block py-2.5 px-4 rounded transition duration-200 hover:bg-white">
               Logout
             </a>
           </nav>
