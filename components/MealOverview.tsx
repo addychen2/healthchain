@@ -27,8 +27,8 @@ const MealOverview: React.FC = () => {
   }, []);
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 w-full h-screen overflow-y-scroll">
-      <h2 className="text-xl font-semibold mb-4">Last Week's Meals</h2>
+    <div className="bg-diet-green-dark rounded-xl shadow-lg p-6 w-full h-screen overflow-y-scroll">
+      <h2 className="text-xl text-white font-semibold mb-4">Last Week's Meals</h2>
       {meals.map((meal, index) => (
         <MealCard
           key={index}

@@ -12,11 +12,11 @@ interface MealCardProps {
 
 const MealCard: React.FC<MealCardProps> = ({ date, time, meal, calories, protein, sugar, sodium }) => {
   return (
-    <div className="bg-orange-100 rounded-lg p-4 mb-4 shadow-sm">
-      <div className="font-semibold mb-2">
+    <div className="bg-diet-green-darker rounded-lg p-4 mb-4 shadow-sm">
+      <div className="text-white font-semibold mb-2">
         {date}, {time}, {meal}
       </div>
-      <div className="text-sm">
+      <div className="text-white text-sm">
         <p>Calories: {calories}</p>
         <p>Protein: {protein}g</p>
         <p>Sugar: {sugar}g</p>
