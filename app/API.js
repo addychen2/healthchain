@@ -26,7 +26,7 @@ export async function add_food(food) {
         console.log('Food added successfully:', data);
         
         // Dispatch a custom event after successfully adding food
-        window.dispatchEvent(new CustomEvent('foodAdded'));
+        window.dispatchEvent(new CustomEvent('foodChange'));
         console.log("Food added event emitted");
         
         return data;
@@ -67,7 +67,7 @@ export async function add_food_uid(food) {
     const data = await response.json();
     console.log('API response:', data); // Debug log
     // Dispatch a custom event after successfully adding food
-    window.dispatchEvent(new CustomEvent('foodAdded'));
+    window.dispatchEvent(new CustomEvent('foodChange'));
     console.log("Food added event emitted");
     return data; // Return the data here
   } catch (error) {
@@ -102,6 +102,7 @@ export async function remove_food_uid(food){
 
     const data = await response.json();
     console.log('API response:', data); // Debug log
+    window.dispatchEvent(new CustomEvent('foodChange'));
     return data; // Return the data here
   } catch (error) {
     console.error('Error fetching AI result:', error);
