@@ -5,7 +5,7 @@ import Messages from "./Messages";
 import Controls from "./Controls";
 import StartCall from "./StartCall";
 import { ComponentRef, useRef } from "react";
-import { add_food } from '../app/API';
+import { add_food, get_all_food } from '../app/API';
 
 export default function ClientComponent({
   accessToken,
@@ -53,6 +53,8 @@ export default function ClientComponent({
             }
 
           }
+
+          get_all_food()
 
           if (message.type === "user_message") {
             // Log the expressions inferred

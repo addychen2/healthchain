@@ -97,6 +97,7 @@ def today():
         'total_calories': total_calories,
         'date': today_date.strftime('%Y-%m-%d')
     })
+
 @app.route('/api/log_food', methods=['POST'])
 def log_food():
     data = request.get_json()
@@ -276,7 +277,7 @@ def get_target_calories():
 @app.route('/api/get_all_food', methods=['GET'])
 def get_all_food():
     # Query the foodTable to get all food entries
-    food_entries = foodTable.query.all()
+    food_entries = foodCalTable.query.all()
 
     # Prepare a list to store the results
     all_food = []
