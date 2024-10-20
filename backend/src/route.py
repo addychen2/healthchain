@@ -3,6 +3,7 @@ from model import *
 from flask import request, jsonify
 from datetime import date, datetime, timedelta
 from flask_jwt_extended import create_access_token, jwt_required, JWTManager
+
 import bcrypt
 from gemini import parse_calories
 
@@ -62,8 +63,7 @@ def login():
 
 @app.route('/api/logout', methods=['GET'])
 def logout():
-    # Clear the session
-    session.clear()
+
     return jsonify({'message': 'Logged out successfully'}), 200
 
 @app.route('/api/today_calories/', methods=['GET'])
@@ -102,20 +102,20 @@ def log_food():
 
     parsed_data = parse_calories(data)
 
-    print("data: ")
+    print("parsed data: ")
     print(parsed_data)
 
     # Extract the necessary fields
     food_name = parsed_data[0]['food_name']
-    # calories = parsed_data[0]['calories']
+    calories = parsed_data[0]['calories']
 
     # Basic validation to ensure all necessary data is provided
-    if not all([food_name]):
+    if not all([food_name, calories]):
         return jsonify({'error': 'Missing required fields'}), 400
 
     try:
-        # Create a new calTable entry
-        new_entry = foodTable(food_name=food_name, date=date.today())
+        # Create a new calTable entry 
+        new_entry = foodTable(food_name=food_name, calories=calories, date=date.today())
 
         # Add the new entry to the session and commit it to the database
         db.session.add(new_entry)

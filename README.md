@@ -73,7 +73,13 @@ To set up the backend, follow these steps:
   pip install -r requirements.txt
   ```
 
-4. **Run the Backend Application**:
+4. **Install dependencies**
+
+```bash
+  pip install -r requirements.txt
+  ```
+
+5. **Run the Backend Application**:
   ```bash
   python main.py
   ```
