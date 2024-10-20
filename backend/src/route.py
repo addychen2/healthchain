@@ -182,7 +182,7 @@ def remove_food():
     user_id = data.get('user_id')
 
     print("User ID: ", user_id)
-
+    parsed_data = parse_removal(data)
     # Basic validation to ensure all necessary data is provided
     if not user_id:
         return jsonify({'error': 'Missing required fields'}), 400
@@ -196,8 +196,11 @@ def remove_food():
 
         # Remove food entries in descending order
         for food_entry in food_entries:
+            if remove_count >= parsed_data[0]['num']:
+                break
             db.session.delete(food_entry)
-            remove_count += 1  # Increment the counter for each removal
+            remove_count += 1 
+             # Increment the counter for each removal
 
         db.session.commit()
 
