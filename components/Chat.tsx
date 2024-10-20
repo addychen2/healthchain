@@ -5,7 +5,7 @@ import Messages from "./Messages";
 import Controls from "./Controls";
 import StartCall from "./StartCall";
 import { ComponentRef, useRef } from "react";
-import { add_food, get_all_food, add_food_uid } from '../app/API';
+import { add_food, get_all_food, add_food_uid, remove_food_uid } from '../app/API';
 
 export default function ClientComponent({
   accessToken,

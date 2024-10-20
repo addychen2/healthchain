@@ -5,7 +5,7 @@ from datetime import date, datetime, timedelta
 from flask_jwt_extended import create_access_token, jwt_required, JWTManager
 
 import bcrypt
-from gemini import parse_calories
+from gemini import parse_calories, parse_removal
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -173,6 +173,43 @@ def add_food():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
+@app.route('/api/remove_food', methods=['POST'])
+def remove_food():
+    data = request.get_json()
+    print("Received data: ", data)
+
+    # Extract the necessary fields
+    user_id = data.get('user_id')
+
+    print("User ID: ", user_id)
+
+    # Basic validation to ensure all necessary data is provided
+    if not user_id:
+        return jsonify({'error': 'Missing required fields'}), 400
+
+    try:
+        # Initialize a counter for removed items
+        remove_count = 0
+
+        # Query to find food entries for the specified user, ordered by id descending
+        food_entries = db.session.query(calTable).filter_by(user_id=user_id).order_by(calTable.id.desc()).all()
+
+        # Remove food entries in descending order
+        for food_entry in food_entries:
+            db.session.delete(food_entry)
+            remove_count += 1  # Increment the counter for each removal
+
+        db.session.commit()
+
+        return jsonify({'num': remove_count}), 200  # Return the count of removed items
+
+    except Exception as e:
+        db.session.rollback()  # Roll back the session in case of error
+        print("Error occurred: ", e)
+        return jsonify({'error': 'An error occurred while removing the food entries'}), 500
+
+
+
     
 @app.route('/api/weekly_calories', methods=['GET'])
 def weekly_calories():
@@ -303,6 +340,63 @@ def get_all_food():
 
     return jsonify({'all_food': all_food}), 200
 
+
+
+@app.route('/api/get_all_food_uid', methods=['GET'])
+def get_all_food_uid():
+    # Extract user_id from the query parameters
+    user_id = request.args.get('user_id', type=int)  # Assuming user_id is passed as a query parameter
+
+    if user_id is None:
+        return jsonify({'error': 'user_id is required'}), 400
+
+    # Query the foodTable to get all food entries for the specified user_id
+    food_entries = calTable.query.filter_by(user_id=user_id).all()
+
+    # Prepare a list to store the results
+    all_food = []
+
+    # Iterate over the food entries and add them to the list
+    for entry in food_entries:
+        all_food.append({
+            'food_name': entry.food_name,
+            'calories': entry.calories,
+            'date': entry.date.strftime('%Y-%m-%d')
+        })
+
+    # Optionally sort the food entries by date
+    all_food.sort(key=lambda x: x['date'])  # Sort by date if desired
+
+    return jsonify({'all_food': all_food}), 200
+
+
+
+@app.route('/api/get_all_food_uid', methods=['GET'])
+def get_all_food_uid():
+    # Extract user_id from the query parameters
+    user_id = request.args.get('user_id', type=int)  # Assuming user_id is passed as a query parameter
+
+    if user_id is None:
+        return jsonify({'error': 'user_id is required'}), 400
+
+    # Query the foodTable to get all food entries for the specified user_id
+    food_entries = calTable.query.filter_by(user_id=user_id).all()
+
+    # Prepare a list to store the results
+    all_food = []
+
+    # Iterate over the food entries and add them to the list
+    for entry in food_entries:
+        all_food.append({
+            'food_name': entry.food_name,
+            'calories': entry.calories,
+            'date': entry.date.strftime('%Y-%m-%d')
+        })
+
+    # Optionally sort the food entries by date
+    all_food.sort(key=lambda x: x['date'])  # Sort by date if desired
+
+    return jsonify({'all_food': all_food}), 200
 @app.route('/api/all_food_calories', methods=['GET'])
 def get_all_food_calories():
     # Query the foodTable to get all food entries

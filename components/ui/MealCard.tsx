@@ -14,7 +14,7 @@ const MealCard: React.FC<MealCardProps> = ({ date, time, meal, calories, protein
   return (
     <div className="bg-orange-100 rounded-lg p-4 mb-4 shadow-sm">
       <div className="font-semibold mb-2">
-        {date}, {time}, {meal}
+        {date}, {meal}
       </div>
       <div className="text-sm">
         <p>Calories: {calories}</p>
