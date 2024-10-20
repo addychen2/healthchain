@@ -6,8 +6,31 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const CalorieGraphCard = () => {
-    const [chartData, setChartData] = useState({
+// Define interfaces for the API responses
+interface DailyCalorieEntry {
+  date: string;           // The date should be a string in 'YYYY-MM-DD' format
+  total_calories: number; // Total calories consumed on that date
+}
+
+interface WeeklyData {
+  daily_calories: DailyCalorieEntry[]; // Array of daily calorie entries
+}
+
+interface TargetData {
+  cal_target: number;     // The target calorie intake
+}
+
+const CalorieGraphCard: React.FC = () => {
+    const [chartData, setChartData] = useState<{
+        labels: string[];
+        datasets: {
+            label: string;
+            data: number[];
+            borderColor: string;
+            fill: boolean;
+            borderDash?: number[];
+        }[];
+    }>({
         labels: [],
         datasets: [
             {
@@ -18,7 +41,7 @@ const CalorieGraphCard = () => {
             },
             {
                 label: "Target",
-                data: [],  // This will be updated with target data
+                data: [],
                 borderColor: "rgba(255,0,0,0.5)",
                 borderDash: [10, 5],
                 fill: false,
@@ -36,11 +59,12 @@ const CalorieGraphCard = () => {
                 'Content-Type': 'application/json',
             },
         });
-        const weeklyData = await response.json();
+
+        const weeklyData: WeeklyData = await response.json();
 
         // Extract the dates and calories
-        const labels = weeklyData.daily_calories.map(entry => entry.date).reverse();  // Reverse the labels
-        const calories = weeklyData.daily_calories.map(entry => entry.total_calories).reverse();  // Reverse the data
+        const labels = weeklyData.daily_calories.map((entry: DailyCalorieEntry) => entry.date).reverse();
+        const calories = weeklyData.daily_calories.map((entry: DailyCalorieEntry) => entry.total_calories).reverse();
 
         // Fetch target protein/calories
         const targetResponse = await fetch(`http://localhost:8080/api/get_target_calories?user_id=${userId}`, {
@@ -49,7 +73,8 @@ const CalorieGraphCard = () => {
                 'Content-Type': 'application/json',
             },
         });
-        const targetData = await targetResponse.json(); 
+        
+        const targetData: TargetData = await targetResponse.json(); 
         const targetValue = targetData.cal_target;
 
         // Update the chartData state

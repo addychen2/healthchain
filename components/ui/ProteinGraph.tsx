@@ -6,8 +6,31 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const ProteinGraphCard = () => {
-    const [chartData, setChartData] = useState({
+// Define interfaces for the API responses
+interface DailyProteinEntry {
+    date: string;            // The date should be a string in 'YYYY-MM-DD' format
+    total_protein: number;  // Total protein consumed on that date
+}
+
+interface WeeklyProteinData {
+    daily_protein: DailyProteinEntry[]; // Array of daily protein entries
+}
+
+interface TargetProteinData {
+    pro_target: number;     // The target protein intake
+}
+
+const ProteinGraphCard: React.FC = () => {
+    const [chartData, setChartData] = useState<{
+        labels: string[];
+        datasets: {
+            label: string;
+            data: number[];
+            borderColor: string;
+            fill: boolean;
+            borderDash?: number[];
+        }[];
+    }>({
         labels: [],
         datasets: [
             {
@@ -18,7 +41,7 @@ const ProteinGraphCard = () => {
             },
             {
                 label: "Target",
-                data: [],  // This will be updated with target data
+                data: [],
                 borderColor: "rgba(255,0,0,0.5)",
                 borderDash: [10, 5],
                 fill: false,
@@ -42,7 +65,7 @@ const ProteinGraphCard = () => {
                 throw new Error(`Error fetching weekly protein: ${response.statusText}`);
             }
 
-            const weeklyData = await response.json();
+            const weeklyData: WeeklyProteinData = await response.json();
             console.log("Weekly Protein Data:", weeklyData);
 
             // Check if daily_protein is defined and is an array
@@ -52,8 +75,8 @@ const ProteinGraphCard = () => {
             }
 
             // Extract the dates and protein data
-            const labels = weeklyData.daily_protein.map(entry => entry.date).reverse();  // Reverse the labels
-            const protein = weeklyData.daily_protein.map(entry => entry.total_protein).reverse();  // Reverse the data
+            const labels = weeklyData.daily_protein.map((entry: DailyProteinEntry) => entry.date).reverse();  // Reverse the labels
+            const protein = weeklyData.daily_protein.map((entry: DailyProteinEntry) => entry.total_protein).reverse();  // Reverse the data
 
             // Fetch target protein
             const targetResponse = await fetch(`http://localhost:8080/api/get_target_protein?user_id=${userId}`, {
@@ -67,7 +90,7 @@ const ProteinGraphCard = () => {
                 throw new Error(`Error fetching target protein: ${targetResponse.statusText}`);
             }
 
-            const targetData = await targetResponse.json();
+            const targetData: TargetProteinData = await targetResponse.json();
             const targetValue = targetData.pro_target;
 
             // Update the chartData state
