@@ -14,11 +14,11 @@ class Food(typing.TypedDict):
     food_name: str
 
 def parse_calories(prompt):
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-1.5-pro")
     print("prompt: ")
     print(prompt["food"])
     response = model.generate_content(
-        "Extract food and calories" + prompt["food"],
+        "Extract food and calories from the following" + prompt["food"],
         generation_config=genai.GenerationConfig(
         response_mime_type="application/json", response_schema=list[Food]
         ),
@@ -38,7 +38,7 @@ def parse_removal(prompt):
         num: int
 
     response = model.generate_content(
-        "get number of items being removed. removing the last item removes 1 item. dont return 123" + prompt["food"],
+        "extract the number of items being removed from the following: " + prompt["food"],
         generation_config=genai.GenerationConfig(
         response_mime_type="application/json", response_schema=list[Remove]
         ),
