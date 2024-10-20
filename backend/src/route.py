@@ -302,3 +302,17 @@ def get_all_food():
         })
 
     return jsonify({'all_food': all_food}), 200
+
+@app.route('/api/all_food_calories', methods=['GET'])
+def get_all_food_calories():
+    # Query the foodTable to get all food entries
+    food_entries = foodCalTable.query.all()
+
+    # Prepare a list to store the results
+    all_food_calories = 0
+
+    # Iterate over the food entries and add them to the list
+    for entry in food_entries:
+        all_food_calories += entry.calories
+
+    return jsonify({'all_food_calories': all_food_calories}), 200
