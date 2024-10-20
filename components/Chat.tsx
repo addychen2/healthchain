@@ -1,12 +1,10 @@
 "use client";
-"use client";
 
 import { VoiceProvider } from "@humeai/voice-react";
 import Messages from "./Messages";
 import Controls from "./Controls";
 import StartCall from "./StartCall";
 import { ComponentRef, useRef } from "react";
-import { add_food } from "../app/API";
 
 export default function ClientComponent({
   accessToken,
@@ -19,18 +17,16 @@ export default function ClientComponent({
   // optional: use configId from environment variable
   const configId = process.env['NEXT_PUBLIC_HUME_CONFIG_ID'];
   
-  
-  
   return (
     <div
       className={
-        "relative grow flex flex-col mx-auto w-full overflow-hidden h-[0px]"
+        "flex flex-col mx-auto w-full max-h-24"
       }
     >
       <VoiceProvider
         auth={{ type: "accessToken", value: accessToken }}
         configId={configId}
-        onMessage={(message) => {
+        onMessage={() => {
           if (timeout.current) {
             window.clearTimeout(timeout.current);
           }
