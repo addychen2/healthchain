@@ -24,7 +24,8 @@ const config = {
     },
     extend: {
       colors: {
-        'hume-orange': '#F8DEBD',
+        'hume-orange': '#FFFCF8',
+        'navbar-white': '#E8E7E7',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
