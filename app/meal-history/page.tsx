@@ -19,12 +19,24 @@ export default function Page(){
             </div>
 
             <div className="flex flex-col w-64 justify-evenly mx-10" >
-            
-            <ProteinCard />
 
-            <CalorieCard />
+            <Card
 
-           
+                goalTitle="Protein Goal"
+                currentValue={80}
+                goalValue={100}
+                status="Below"
+        
+            />
+
+            <Card
+
+                goalTitle="Calorie Goal"
+                currentValue={3000}
+                goalValue={2800}
+                status="Above"
+        
+            />
 
         
         </div>
