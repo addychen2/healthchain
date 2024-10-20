@@ -40,13 +40,6 @@ Below are the steps to completing deployment:
 
 If you have questions, require assistance, or wish to engage in discussions pertaining to this starter template, [please reach out to us on Discord](https://link.hume.ai/discord).
 
-## Gemini Setup
-```
-pip3/pip install -q -U google-generativeai
-
-pip3/pip install python-dotenv
-```
-
 
 ## Setting Up the Backend
 
@@ -70,7 +63,6 @@ To set up the backend, follow these steps:
 3. **Navigate to the Backend Source Directory**:
   ```bash
   cd backend/src
-  pip install -r requirements.txt
   ```
 
 4. **Install dependencies**

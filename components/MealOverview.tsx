@@ -1,49 +1,44 @@
-import React from 'react';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import MealCard from './ui/MealCard';
+import { get_all_food } from '../app/API';
+
+interface FoodItem {
+  calories: number;
+  date: string;
+  food_name: string;
+}
 
 const MealOverview: React.FC = () => {
-  // Example meal data
-  const meals = [
-      { date: '10/18/2024', time: '7:00 PM', mealtype:'Burrito', meal: 'Dinner', calories: 700, protein: 40, sugar: 20, sodium: 500 },
-      { date: '10/18/2024', time: '1:00 PM', mealtype:'Burrito', meal: 'Lunch', calories: 600, protein: 30, sugar: 15, sodium: 400 },
-      { date: '10/18/2024', time: '8:00 AM', meal: 'Breakfast', calories: 500, protein: 20, sugar: 10, sodium: 300 },
-      { date: '10/17/2024', time: '7:00 PM', meal: 'Dinner', calories: 700, protein: 40, sugar: 20, sodium: 500 },
-      { date: '10/17/2024', time: '1:00 PM', meal: 'Lunch', calories: 600, protein: 30, sugar: 15, sodium: 400 },
-      { date: '10/17/2024', time: '8:00 AM', meal: 'Breakfast', calories: 500, protein: 20, sugar: 10, sodium: 300 },
-      { date: '10/16/2024', time: '7:00 PM', meal: 'Dinner', calories: 700, protein: 40, sugar: 20, sodium: 500 },
-      { date: '10/16/2024', time: '1:00 PM', meal: 'Lunch', calories: 600, protein: 30, sugar: 15, sodium: 400 },
-      { date: '10/16/2024', time: '8:00 AM', meal: 'Breakfast', calories: 500, protein: 20, sugar: 10, sodium: 300 },
-      { date: '10/15/2024', time: '7:00 PM', meal: 'Dinner', calories: 700, protein: 40, sugar: 20, sodium: 500 },
-      { date: '10/15/2024', time: '1:00 PM', meal: 'Lunch', calories: 600, protein: 30, sugar: 15, sodium: 400 },
-      { date: '10/15/2024', time: '8:00 AM', meal: 'Breakfast', calories: 500, protein: 20, sugar: 10, sodium: 300 },
-      { date: '10/14/2024', time: '7:00 PM', meal: 'Dinner', calories: 700, protein: 40, sugar: 20, sodium: 500 },
-      { date: '10/14/2024', time: '1:00 PM', meal: 'Lunch', calories: 600, protein: 30, sugar: 15, sodium: 400 },
-      { date: '10/14/2024', time: '8:00 AM', meal: 'Breakfast', calories: 500, protein: 20, sugar: 10, sodium: 300 },
-      { date: '10/13/2024', time: '7:00 PM', meal: 'Dinner', calories: 700, protein: 40, sugar: 20, sodium: 500 },
-      { date: '10/13/2024', time: '1:00 PM', meal: 'Lunch', calories: 600, protein: 30, sugar: 15, sodium: 400 },
-      { date: '10/13/2024', time: '8:00 AM', meal: 'Breakfast', calories: 500, protein: 20, sugar: 10, sodium: 300 },
-      { date: '10/12/2024', time: '7:00 PM', meal: 'Dinner', calories: 700, protein: 40, sugar: 20, sodium: 500 },
-      { date: '10/12/2024', time: '1:00 PM', meal: 'Lunch', calories: 600, protein: 30, sugar: 15, sodium: 400 },
-      { date: '10/12/2024', time: '8:00 AM', meal: 'Breakfast', calories: 500, protein: 20, sugar: 10, sodium: 300 },
-      { date: '10/11/2024', time: '7:00 PM', meal: 'Dinner', calories: 700, protein: 40, sugar: 20, sodium: 500 },
-      { date: '10/11/2024', time: '1:00 PM', meal: 'Lunch', calories: 600, protein: 30, sugar: 15, sodium: 400 },
-      { date: '10/11/2024', time: '8:00 AM', meal: 'Breakfast', calories: 500, protein: 20, sugar: 10, sodium: 300 },
-    // Add more meal entries as needed
-  ];
+  const [meals, setMeals] = useState<FoodItem[]>([]);
+
+  useEffect(() => {
+    const fetchMeals = async () => {
+      try {
+        const response = await get_all_food();
+        setMeals(response.all_food);
+      } catch (error) {
+        console.error('Error fetching meals:', error);
+      }
+    };
+
+    fetchMeals();
+  }, []);
 
   return (
-    <div className="grow bg-white rounded-xl shadow-lg p-6 w-full h-screen  overflow-y-scroll">
-      <h2 className="text-xl font-semibold mb-4">Meal History</h2>
+    <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md h-96 overflow-y-scroll">
+      <h2 className="text-xl font-semibold mb-4">Last Week's Meals</h2>
       {meals.map((meal, index) => (
         <MealCard
           key={index}
           date={meal.date}
-          time={meal.time}
-          meal={meal.meal}
+          time="" // You may need to add a time field to your FoodItem interface if available
+          meal={meal.food_name}
           calories={meal.calories}
-          protein={meal.protein}
-          sugar={meal.sugar}
-          sodium={meal.sodium}
+          protein={0} // Set to 0 or remove if not available in the API response
+          sugar={0} // Set to 0 or remove if not available in the API response
+          sodium={0} // Set to 0 or remove if not available in the API response
         />
       ))}
     </div>

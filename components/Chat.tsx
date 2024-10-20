@@ -5,6 +5,7 @@ import Messages from "./Messages";
 import Controls from "./Controls";
 import StartCall from "./StartCall";
 import { ComponentRef, useRef } from "react";
+import { add_food, get_all_food } from '../app/API';
 
 export default function ClientComponent({
   accessToken,
@@ -26,7 +27,7 @@ export default function ClientComponent({
       <VoiceProvider
         auth={{ type: "accessToken", value: accessToken }}
         configId={configId}
-        onMessage={() => {
+        onMessage={(message) => {
           if (timeout.current) {
             window.clearTimeout(timeout.current);
           }
@@ -46,12 +47,14 @@ export default function ClientComponent({
 
           if(message.type === "assistant_message") {
             console.log(message.message.content)
-            if (message.message.content.includes("dding") && message.message.content.includes("calories")) {
+            if (message.message.content.includes("Adding") && message.message.content.includes("calories")) {
               add_food(message.message.content);
               console.log("Food added to database")
             }
 
           }
+
+          get_all_food()
 
           if (message.type === "user_message") {
             // Log the expressions inferred

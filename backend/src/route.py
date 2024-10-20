@@ -66,13 +66,15 @@ def logout():
 
     return jsonify({'message': 'Logged out successfully'}), 200
 
-@app.route('/api/today_calories/', methods=['GET'])
+@app.route('/api/today_calories/', methods=['GET', 'POST'])
 def today():
-    # Get the JSON data from the request body
-    data = request.get_json()
+    # Try to get the user_id from the query parameters first
+    user_id = request.args.get('user_id')
 
-    # Extract the user_id from the JSON data
-    user_id = data.get('user_id')
+    # If user_id is not in the query parameters, try to get it from JSON body
+    if not user_id and request.is_json:
+        data = request.get_json()
+        user_id = data.get('user_id')
 
     # Check if the user_id was provided
     if not user_id:
@@ -239,11 +241,15 @@ def set_target_calories():
 
 
 
-@app.route('/api/get_target_calories', methods=['GET'])
+@app.route('/api/get_target_calories', methods=['GET', 'POST'])
 def get_target_calories():
-    # Get the user ID from the query parameters
-    data = request.get_json()
-    user_id = data.get('user_id')
+    # Try to get the user_id from the query parameters first
+    user_id = request.args.get('user_id')
+
+    # If user_id is not in the query parameters, try to get it from JSON body
+    if not user_id and request.is_json:
+        data = request.get_json()
+        user_id = data.get('user_id')
 
     # Basic validation to ensure the user_id is provided
     if not user_id:
@@ -265,3 +271,23 @@ def get_target_calories():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+    
+
+
+@app.route('/api/get_all_food', methods=['GET'])
+def get_all_food():
+    # Query the foodTable to get all food entries
+    food_entries = foodCalTable.query.all()
+
+    # Prepare a list to store the results
+    all_food = []
+
+    # Iterate over the food entries and add them to the list
+    for entry in food_entries:
+        all_food.append({
+            'food_name': entry.food_name,
+            'calories': entry.calories,
+            'date': entry.date.strftime('%Y-%m-%d')
+        })
+
+    return jsonify({'all_food': all_food}), 200
