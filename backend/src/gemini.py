@@ -38,7 +38,7 @@ def parse_removal(prompt):
         num: int
 
     response = model.generate_content(
-        "get number of items being removed" + prompt["food"],
+        "get number of items being removed. removing the last item removes 1 item. dont return 123" + prompt["food"],
         generation_config=genai.GenerationConfig(
         response_mime_type="application/json", response_schema=list[Remove]
         ),

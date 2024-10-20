@@ -63,7 +63,7 @@ export async function add_food_uid(food) {
 }
 
 
-export async function remove_food_uid(){
+export async function remove_food_uid(food){
   try{
     const userId = Cookies.get("user_id");
         // Get today's date in YYYY-MM-DD format
