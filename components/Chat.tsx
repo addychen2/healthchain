@@ -41,6 +41,25 @@ export default function ClientComponent({
               });
             }
           }, 200);
+
+          console.log(message.type)
+
+          if(message.type === "assistant_message") {
+            console.log(message.message.content)
+            if (message.message.content.includes("dding") && message.message.content.includes("calories")) {
+              add_food(message.message.content);
+              console.log("Food added to database")
+            }
+
+          }
+
+          if (message.type === "user_message") {
+            // Log the expressions inferred
+            console.log(message.message.content)
+            // Add the food to the database
+            
+            console.log(message.models.prosody?.scores)
+          }
         }}
       >
         <Messages ref={ref} />
