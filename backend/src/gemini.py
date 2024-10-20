@@ -10,8 +10,9 @@ load_dotenv()
 genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 
 class Food(typing.TypedDict):
-    food_name: str
     calories: int
+    food_name: str
+
 
 def parse_calories(prompt):
     model = genai.GenerativeModel("gemini-1.5-flash")
