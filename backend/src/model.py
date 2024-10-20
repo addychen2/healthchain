@@ -80,4 +80,4 @@ class foodCalTable(db.Model):
 class calTarget(db.Model):
 	id = db.Column(db.Integer, primary_key = True)
 	user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
-	cal_target = db.Column(db.Integer, nullable = False)
+	cal_target = db.Column(db.Integer, nullable = False, default = 2000)
