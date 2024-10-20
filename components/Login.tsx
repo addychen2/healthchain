@@ -65,7 +65,7 @@ const Login = () => {
       exit={{ opacity: 0, y: 10 }}
     >
       <motion.div className="max-w-2xl mx-auto w-full flex flex-col gap-4">
-        <h2 className="text-xl font-semibold mb-4">Login</h2>
+        <h2 className="text-xl text-white font-semibold mb-4">Login</h2>
 
         {/* Animate error messages */}
         <AnimatePresence>
@@ -84,7 +84,7 @@ const Login = () => {
         {/* Login Form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <label htmlFor="email" className="text-sm font-medium">
+            <label htmlFor="email" className="text-sm text-white font-medium">
               Email
             </label>
             <input
@@ -93,12 +93,12 @@ const Login = () => {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="border border-gray-300 rounded p-2 w-full"
+              className="border border-white bg-diet-green-darkest  rounded text-white p-2 w-full"
               required
             />
           </div>
           <div>
-            <label htmlFor="password" className="text-sm font-medium">
+            <label htmlFor="password" className="text-sm text-white font-medium">
               Password
             </label>
             <input
@@ -107,7 +107,7 @@ const Login = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="border border-gray-300 rounded p-2 w-full"
+              className="border  border-white bg-diet-green-darkest rounded text-white p-2 w-full"
               required
             />
           </div>
@@ -116,7 +116,7 @@ const Login = () => {
           <button
             type="submit"
             className={cn(
-              "bg-blue-500 text-white rounded p-2",
+              "bg-blue-500 text-white rounded text-white p-2",
               isSubmitting && "opacity-50 cursor-not-allowed"
             )}
             disabled={isSubmitting}
@@ -125,9 +125,9 @@ const Login = () => {
           </button>
         </form>
 
-        <p className="text-sm mt-4">
+        <p className="text-sm mt-4 text-white">
           Don't have an account?{" "}
-          <a href="/register" className="text-blue-500 underline">
+          <a href="/register" className="text-blue-500  underline">
             Register here
           </a>
         </p>

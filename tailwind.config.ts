@@ -14,6 +14,7 @@ const config = {
     fontFamily: {
       'sans': ['var(--font-geist-sans)', ...defaultTheme.fontFamily.sans],
       'mono': ['var(--font-geist-mono)', ...defaultTheme.fontFamily.mono],
+
     },
     container: {
       center: true,
@@ -23,9 +24,23 @@ const config = {
       },
     },
     extend: {
+      height: {
+        '128': '32rem',
+        '144': '36rem',
+        '160': '40rem',
+        '176': '44rem',
+        '192': '48rem',
+
+      },
       colors: {
         'hume-orange': '#FFFCF8',
         'navbar-white': '#E8E7E7',
+        'diet-green-lightest': '#B3EDEB',
+        'diet-green-lighter': '#51cbc8',
+        'diet-green-light': '#29B2AF',
+        'diet-green': '#108D8A',
+        'diet-green-darker': '#0c5b5a',
+        'diet-green-darkest': '#083434',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
