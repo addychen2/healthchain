@@ -1,6 +1,8 @@
 import SideNav from "@/components/SideNav";
 import Card from "@/components/ui/Card";
 import MealOverview from "@/components/MealOverview";
+import CalorieCard from "@/components/CalorieCard";
+import ProteinCard from "@/components/ProteinCard";
 
 
 export default function Page(){
@@ -18,23 +20,9 @@ export default function Page(){
 
             <div className="flex flex-col w-64 justify-evenly mx-10" >
 
-            <Card
+            <CalorieCard />
 
-                goalTitle="Protein Goal"
-                currentValue={80}
-                goalValue={100}
-                status="Below"
-        
-            />
-
-            <Card
-
-                goalTitle="Calorie Goal"
-                currentValue={3000}
-                goalValue={2800}
-                status="Above"
-        
-            />
+           <ProteinCard />
 
         
         </div>
