@@ -1,4 +1,4 @@
-import ChatText from "@/components/ChatText";
+
 import SideNav from "@/components/SideNav";
 import Card from "@/components/ui/Card";
 import { getHumeAccessToken } from "@/utils/getHumeAccessToken";
@@ -32,8 +32,8 @@ export default async function Page() {
         <SideNav/>
       </div>
 
-      <div className=" grow flex-col h-max inset-0 ">
-        <h1 className="text-3xl font-sans text-center content-end h-96 my-5 ">
+      <div className=" grow flex-col  h-max inset-0">
+        <h1 className="text-7xl font-sans text-center content-end h-96  ">
           Share your Meals and We'll Track 'em
         </h1>
         
