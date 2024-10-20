@@ -19,7 +19,7 @@ def parse_calories(prompt):
     print("prompt: ")
     print(prompt["food"])
     response = model.generate_content(
-        "Extract food, calories, and protein from the following" + prompt["food"],
+        "Extract food, and calories from the following. Obtain the protein information based on the name and calories" + prompt["food"],
         generation_config=genai.GenerationConfig(
         response_mime_type="application/json", response_schema=list[Food]
         ),
