@@ -31,10 +31,17 @@ def register():
     try:
         db.session.add(new_user)
         db.session.commit()
+        
+        # Create a new target entry for the user
+        new_target = calTarget(user_id=new_user.id, cal_target=2000)  # Default target value
+        db.session.add(new_target)
+        db.session.commit()
+        
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
     return jsonify({'message': 'User registered successfully'}), 201
+
 
 
 @app.route('/api/login', methods=['POST'])
