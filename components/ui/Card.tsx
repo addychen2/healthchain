@@ -19,7 +19,7 @@ const Card: React.FC<CardProps> = ({ goalTitle, currentValue, goalValue, status 
       {/* Current value / goal */}
       <div className="text-4xl font-bold mt-2">{currentValue}</div>
       <div className="text-gray-500 text-sm">
-        / {goalValue} gram
+        / {goalValue} calories
       </div>
 
       {/* Status label */}
