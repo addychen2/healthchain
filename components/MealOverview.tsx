@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import MealCard from './ui/MealCard';
-import { get_all_food } from '../app/API';
+import { get_all_food_uid } from '../app/API';
 
 interface FoodItem {
   calories: number;
@@ -16,7 +16,7 @@ const MealOverview: React.FC = () => {
   useEffect(() => {
     const fetchMeals = async () => {
       try {
-        const response = await get_all_food();
+        const response = await get_all_food_uid();
         setMeals(response.all_food);
       } catch (error) {
         console.error('Error fetching meals:', error);
@@ -33,7 +33,7 @@ const MealOverview: React.FC = () => {
         <MealCard
           key={index}
           date={meal.date}
-          time="" // You may need to add a time field to your FoodItem interface if available
+          time="1" // You may need to add a time field to your FoodItem interface if available
           meal={meal.food_name}
           calories={meal.calories}
           protein={0} // Set to 0 or remove if not available in the API response

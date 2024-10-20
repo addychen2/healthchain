@@ -1,9 +1,15 @@
 const ADDRESS = "http://localhost:8080";
 import Cookies from "js-cookie";
 
+let refreshCallback = null;
+
+export function setRefreshCallback(callback) {
+  refreshCallback = callback;
+}
 
 export async function add_food(food) {
     try {
+        console.log('Adding food:', food);
         const response = await fetch(ADDRESS + '/api/log_food', {
         method: "POST",
         headers: {
@@ -17,10 +23,15 @@ export async function add_food(food) {
         }
     
         const data = await response.json();
-        console.log('API response:', data); // Debug log
-        return data; // Return the data here
+        console.log('Food added successfully:', data);
+        
+        // Dispatch a custom event after successfully adding food
+        window.dispatchEvent(new CustomEvent('foodChange'));
+        console.log("Food added event emitted");
+        
+        return data;
     } catch (error) {
-        console.error('Error fetching AI result:', error);
+        console.error('Error adding food:', error);
         throw error;
     }
 }
@@ -55,6 +66,9 @@ export async function add_food_uid(food) {
 
     const data = await response.json();
     console.log('API response:', data); // Debug log
+    // Dispatch a custom event after successfully adding food
+    window.dispatchEvent(new CustomEvent('foodChange'));
+    console.log("Food added event emitted");
     return data; // Return the data here
   } catch (error) {
     console.error('Error fetching AI result:', error);
@@ -62,6 +76,69 @@ export async function add_food_uid(food) {
   }
 }
 
+export async function set_limit(food) {
+  try {
+    // Retrieve user_id from the cookie
+    const userId = Cookies.get("user_id");
+    const payload = {
+      food,
+      user_id: userId,
+    };
+
+    const response = await fetch(`${ADDRESS}/api/set_target_calories_ai`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+  
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  
+    const data = await response.json();
+    console.log('API response:', data); // Debug log
+    return data; // Return the data here
+  
+  } catch (error) {
+    console.error('Error fetching target calories:', error);
+    throw error;
+  }
+  }
+
+export async function remove_food_uid(food){
+  try{
+    const userId = Cookies.get("user_id");
+        // Get today's date in YYYY-MM-DD format
+
+
+    const payload = {
+      food,
+      user_id: userId,
+    };
+
+    const response = await fetch(ADDRESS + '/api/remove_food', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('API response:', data); // Debug log
+    window.dispatchEvent(new CustomEvent('foodChange'));
+    return data; // Return the data here
+  } catch (error) {
+    console.error('Error fetching AI result:', error);
+    throw error;
+  }
+}
 
 
 export async function get_all_food(){
@@ -84,6 +161,56 @@ export async function get_all_food(){
     console.error('Error fetching AI result:', error);
     throw error;
 }
+}
+
+export async function get_all_food_uid(){
+  try {
+
+      const userId = Cookies.get("user_id");
+  
+      // Construct the URL with query parameters
+      const response = await fetch(`${ADDRESS}/api/get_all_food_uid?user_id=${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log('API response:', data); // Debug log
+      return data; // Return the data here
+    } catch (error) {
+      console.error('Error fetching meals:', error);
+      throw error;
+}
+}
+
+
+export async function all_food_calories(){
+  try {
+    console.log('Fetching all food calories...');
+    const response = await fetch(ADDRESS + '/api/all_food_calories', {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    });
+
+    if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('All food calories data:', data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching all food calories:', error);
+    throw error;
+  }
 }
 
 export async function login(email, password) {
@@ -128,6 +255,106 @@ export async function logout() {
     return data; // Return the data here
   } catch (error) {
     console.error('Error fetching AI result:', error);
+    throw error;
+  }
+}
+
+export async function daily_calories() {
+  try {
+    // Retrieve user_id from the cookie
+    const userId = Cookies.get("user_id");
+
+    const response = await fetch(`${ADDRESS}/api/today_calories/?user_id=${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('API response:', data); // Debug log
+    return data; // Return the data here
+  } catch (error) {
+    console.error('Error fetching meals:', error);
+    throw error;
+  }
+}
+
+export async function daily_protein() {
+  try {
+    // Retrieve user_id from the cookie
+    const userId = Cookies.get("user_id");
+
+    const response = await fetch(`${ADDRESS}/api/today_protein/?user_id=${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('API response:', data); // Debug log
+    return data; // Return the data here
+  } catch (error) {
+    console.error('Error fetching meals:', error);
+    throw error;
+  }
+}
+
+export async function get_target_calories() {
+  try {
+    // Retrieve user_id from the cookie
+    const userId = Cookies.get("user_id");
+
+    const response = await fetch(`${ADDRESS}/api/get_target_calories?user_id=${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('API response:', data); // Debug log
+    return data; // Return the data here
+  } catch (error) {
+    console.error('Error fetching target calories:', error);
+    throw error;
+  }
+}
+
+export async function get_target_protein() {
+  try {
+    // Retrieve user_id from the cookie
+    const userId = Cookies.get("user_id");
+
+    const response = await fetch(`${ADDRESS}/api/get_target_protein?user_id=${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('API response:', data); // Debug log
+    return data; // Return the data here
+  } catch (error) {
+    console.error('Error fetching target protein:', error);
     throw error;
   }
 }

@@ -17,9 +17,11 @@ const Card: React.FC<CardProps> = ({ goalTitle, currentValue, goalValue, status 
       <h3 className="text-white text-lg font-semibold">{goalTitle}</h3>
 
       {/* Current value / goal */}
+
       <div className="text-4xl text-white font-bold mt-2">{currentValue}</div>
       <div className="text-white text-sm">
-        / {goalValue} gram
+        / {goalValue} calories
+
       </div>
 
       {/* Status label */}
