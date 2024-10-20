@@ -11,7 +11,7 @@ const ProteinCard: React.FC<ProteinCardProps> = ({ goalTitle, currentValue, goal
   return (
     <div className="bg-diet-green-darkest rounded-xl shadow-md p-6 w-64">
       {/* Icon Placeholder */}
-      <img src="/protein.svg" className="justify-center inset-0"/>
+      <img src="/foodenergy.svg" className="justify-center inset-0"/>
       
       {/* Title */}
       <h3 className="text-white text-lg font-semibold">{goalTitle}</h3>

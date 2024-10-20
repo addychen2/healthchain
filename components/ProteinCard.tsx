@@ -93,7 +93,7 @@ const ProteinCard: React.FC = () => {
       currentValue={proteinData.currentValue}
       goalValue={proteinData.goalValue}
       status={calculateStatus(proteinData.currentValue, proteinData.goalValue)}
-      iconSrc="/path/to/protein-icon.png" // Add your icon path here
+      iconSrc="..../public/logo.png" // Add your icon path here
     />
   );
 };

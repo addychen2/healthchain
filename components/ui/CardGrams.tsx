@@ -12,7 +12,7 @@ const CardGrams: React.FC<CardGramsProps> = ({ goalTitle, currentValue, goalValu
   return (
     <div className="bg-diet-green-darkest rounded-xl shadow-md p-6 w-64">
       {/* Icon */}
-      <img src={iconSrc} alt={`${goalTitle} icon`} className="justify-center inset-0 mb-4" />
+      <img src={"/foodenergy.svg"} alt={`${goalTitle} icon`} className="justify-center inset-0 mb-4" />
       
       {/* Title */}
       <h3 className="text-white text-lg font-semibold">{goalTitle}</h3>
