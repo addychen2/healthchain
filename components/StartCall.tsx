@@ -10,7 +10,7 @@ export default function StartCall() {
     <AnimatePresence>
       {status.value !== "connected" ? (
         <motion.div
-          className={" w-full  py-10 flex items-center content-center justify-center bg-diet-green-darker"}
+          className={" w-full py-10 flex items-center content-center justify-center bg-diet-green-darker"}
           initial="initial"
           animate="enter"
           exit="exit"
