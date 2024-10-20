@@ -7,12 +7,10 @@ export default function Page(){
 
     return (
 
-        <div className="grow flex flex-row ">
-            <div className="flex">
-                <SideNav/>
-            </div>
+        <div className="grow flex flex-row justify-center content-center">
+           
 
-            <div className=" grow flex-col justify-center h-screen inset-0 ">
+            <div className=" grow flex-col justify-center content-center h-screen inset-0 ">
                 <Register />
             </div>
 
