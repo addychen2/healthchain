@@ -77,6 +77,38 @@ export async function add_food_uid(food) {
 }
 
 
+export async function remove_food_uid(){
+  try{
+    const userId = Cookies.get("user_id");
+        // Get today's date in YYYY-MM-DD format
+
+
+    const payload = {
+      food,
+      user_id: userId,
+    };
+
+    const response = await fetch(ADDRESS + '/api/remove_food', {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('API response:', data); // Debug log
+    return data; // Return the data here
+  } catch (error) {
+    console.error('Error fetching AI result:', error);
+    throw error;
+  }
+}
+
 
 export async function get_all_food(){
   try {
@@ -100,7 +132,34 @@ export async function get_all_food(){
 }
 }
 
-export async function all_food_calories() {
+export async function get_all_food_uid(){
+  try {
+
+      const userId = Cookies.get("user_id");
+  
+      // Construct the URL with query parameters
+      const response = await fetch(`${ADDRESS}/api/get_all_food_uid?user_id=${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log('API response:', data); // Debug log
+      return data; // Return the data here
+    } catch (error) {
+      console.error('Error fetching meals:', error);
+      throw error;
+}
+}
+
+
+export async function all_food_calories(){
   try {
     console.log('Fetching all food calories...');
     const response = await fetch(ADDRESS + '/api/all_food_calories', {

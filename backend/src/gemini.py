@@ -27,3 +27,23 @@ def parse_calories(prompt):
     json_output = json.loads(response.candidates[0].content.parts[0].text)
     print(json_output)
     return json_output
+
+
+def parse_removal(prompt):
+    model = genai.GenerativeModel("gemini-1.5-flash")
+    print("prompt: ")
+    print(prompt["food"])
+
+    class Remove(typing.TypedDict):
+        num: int
+
+    response = model.generate_content(
+        "get number of items being removed" + prompt["food"],
+        generation_config=genai.GenerationConfig(
+        response_mime_type="application/json", response_schema=list[Remove]
+        ),
+    )
+    print("gemini response:")
+    json_output = json.loads(response.candidates[0].content.parts[0].text)
+    print(json_output)
+    return json_output

@@ -5,7 +5,7 @@ import Messages from "./Messages";
 import Controls from "./Controls";
 import StartCall from "./StartCall";
 import { ComponentRef, useRef } from "react";
-import { add_food, get_all_food, add_food_uid } from '../app/API';
+import { add_food, get_all_food, add_food_uid, remove_food_uid } from '../app/API';
 
 export default function ClientComponent({
   accessToken,
@@ -51,6 +51,12 @@ export default function ClientComponent({
               add_food_uid(message.message.content);
               console.log("Food added to database")
             }
+            if (message.message.content.includes("emoving") || message.message.content.includes("emove") || message.message.content.includes("eleting") || message.message.content.includes("elete")) {
+              remove_food_uid(message.message.content);
+              console.log("Food removed from database")
+            }
+
+
 
           }
 
