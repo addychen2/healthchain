@@ -1,6 +1,5 @@
 const ADDRESS = "http://localhost:8080";
 
-
 export async function add_food(food) {
     try {
         const response = await fetch(ADDRESS + '/api/log_food', {
@@ -17,6 +16,7 @@ export async function add_food(food) {
     
         const data = await response.json();
         console.log('API response:', data); // Debug log
+
         return data; // Return the data here
     } catch (error) {
         console.error('Error fetching AI result:', error);
@@ -27,6 +27,28 @@ export async function add_food(food) {
 export async function get_all_food(){
   try {
     const response = await fetch(ADDRESS + '/api/get_all_food', {
+    method: "GET",
+    headers: {
+        "Content-Type": "application/json",
+    },
+    });
+
+    if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('API response:', data); // Debug log
+    return data; // Return the data here
+} catch (error) {
+    console.error('Error fetching AI result:', error);
+    throw error;
+}
+}
+
+export async function all_food_calories(){
+  try {
+    const response = await fetch(ADDRESS + '/api/all_food_calories', {
     method: "GET",
     headers: {
         "Content-Type": "application/json",

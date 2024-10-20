@@ -2,7 +2,7 @@ import SideNav from "@/components/SideNav";
 import Card from "@/components/ui/Card";
 import { getHumeAccessToken } from "@/utils/getHumeAccessToken";
 import dynamic from "next/dynamic";
-
+import CalorieCard from "@/components/CalorieCard";
 
 
 
@@ -46,14 +46,8 @@ export default async function Page() {
         
         />
 
-        <Card
+          <CalorieCard />
 
-          goalTitle="Calorie Goal"
-          currentValue={3000}
-          goalValue={2800}
-          status="Above"
-        
-        />
 
         
       </div>
