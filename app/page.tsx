@@ -1,38 +1,24 @@
-"use client"; // Add this line to indicate a Client Component
-
 import { Nav } from "@/components/Nav";
 import SideNav from "@/components/SideNav";
 import { getHumeAccessToken } from "@/utils/getHumeAccessToken";
 import CalorieCard from "@/components/CalorieCard";
 import ProteinCard from "@/components/ProteinCard";
 import HeaderAndChat from "@/components/HeaderAndChat";
-import { useEffect, useState } from "react";
 
-export default function Page() {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchAccessToken = async () => {
-      const token = await getHumeAccessToken();
-      if (!token) {
-        throw new Error();
-      }
-      setAccessToken(token);
-    };
-    fetchAccessToken();
-  }, []);
-
+export default async function Page() {
+  const accessToken = await getHumeAccessToken();
+  
   if (!accessToken) {
-    return <div>Loading...</div>; // Show loading state while fetching access token
+    throw new Error();
   }
 
   return (
     <div className="grow flex flex-row h-screen">
       <div className="grow flex flex-col h-screen">
         <div className="hidden">
-          <Nav />
+          <Nav/>
         </div>
-        <SideNav />
+        <SideNav/>
       </div>
 
       <HeaderAndChat accessToken={accessToken} />
