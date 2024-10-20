@@ -5,7 +5,7 @@ import Messages from "./Messages";
 import Controls from "./Controls";
 import StartCall from "./StartCall";
 import { ComponentRef, useRef } from "react";
-import { add_food, get_all_food, add_food_uid, remove_food_uid, set_limit } from '../app/API';
+import { add_food, get_all_food, add_food_uid, remove_food_uid, set_limit, set_limit_protein } from '../app/API';
 
 export default function ClientComponent({
   accessToken,
@@ -59,7 +59,10 @@ export default function ClientComponent({
               set_limit(message.message.content);
               console.log("Limit set");
             }
-
+            if(message.message.content.includes("etting") && message.message.content.includes("limit") && message.message.content.includes("protein")) {
+              set_limit_protein(message.message.content);
+              console.log("Limit set");
+            }
 
           }
 
