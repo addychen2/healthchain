@@ -21,7 +21,7 @@ export default function RootLayout({
         className={cn(
           GeistSans.variable,
           GeistMono.variable,
-          "flex flex-col grow min-h-screen bg-diet-green-darker"
+          "flex flex-col grow h-dvh bg-diet-green-darker"
         )}
       >
         {children}
