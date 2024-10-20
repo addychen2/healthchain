@@ -51,6 +51,12 @@ export default function ClientComponent({
               add_food_uid(message.message.content);
               console.log("Food added to database")
             }
+            if (message.message.content.includes("emoving") || message.message.content.includes("emove") || message.message.content.includes("eleting") || message.message.content.includes("elete")) {
+              remove_food_uid(message.message.content);
+              console.log("Food removed from database")
+            }
+
+
 
           }
 

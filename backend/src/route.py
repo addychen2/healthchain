@@ -371,32 +371,7 @@ def get_all_food_uid():
 
 
 
-@app.route('/api/get_all_food_uid', methods=['GET'])
-def get_all_food_uid():
-    # Extract user_id from the query parameters
-    user_id = request.args.get('user_id', type=int)  # Assuming user_id is passed as a query parameter
 
-    if user_id is None:
-        return jsonify({'error': 'user_id is required'}), 400
-
-    # Query the foodTable to get all food entries for the specified user_id
-    food_entries = calTable.query.filter_by(user_id=user_id).all()
-
-    # Prepare a list to store the results
-    all_food = []
-
-    # Iterate over the food entries and add them to the list
-    for entry in food_entries:
-        all_food.append({
-            'food_name': entry.food_name,
-            'calories': entry.calories,
-            'date': entry.date.strftime('%Y-%m-%d')
-        })
-
-    # Optionally sort the food entries by date
-    all_food.sort(key=lambda x: x['date'])  # Sort by date if desired
-
-    return jsonify({'all_food': all_food}), 200
 @app.route('/api/all_food_calories', methods=['GET'])
 def get_all_food_calories():
     # Query the foodTable to get all food entries
