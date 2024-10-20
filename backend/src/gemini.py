@@ -10,15 +10,15 @@ load_dotenv()
 genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 
 class Food(typing.TypedDict):
-    food_name: str
     calories: int
+    food_name: str
 
 def parse_calories(prompt):
     model = genai.GenerativeModel("gemini-1.5-flash")
     print("prompt: ")
     print(prompt["food"])
     response = model.generate_content(
-        "Extract food and calories and output it into one json item" + prompt["food"],
+        "Extract food and calories" + prompt["food"],
         generation_config=genai.GenerationConfig(
         response_mime_type="application/json", response_schema=list[Food]
         ),
