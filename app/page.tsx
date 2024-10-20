@@ -35,7 +35,7 @@ export default async function Page() {
       </div>
 
       <div className=" grow flex-col  h-max inset-0 ">
-        <h1 className="text-7xl text-white font-sans text-center content-end h-96  ">
+        <h1 className="text-7xl text-white font-sans py-18 text-center content-end min-h-80  ">
           Share Your Meals And We'll Track 'Em
         </h1>
         

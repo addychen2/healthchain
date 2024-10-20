@@ -21,7 +21,7 @@ export default function ClientComponent({
   return (
     <div
       className={
-        "flex  flex-col content-center mx-auto w-full h-128  "
+        "flex  flex-col content-center mx-auto w-full h-full  "
       }
     >
       <VoiceProvider
