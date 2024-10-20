@@ -1,12 +1,11 @@
 "use client";
-"use client";
 
 import { VoiceProvider } from "@humeai/voice-react";
 import Messages from "./Messages";
 import Controls from "./Controls";
 import StartCall from "./StartCall";
 import { ComponentRef, useRef } from "react";
-import { add_food } from "../app/API";
+import { add_food } from '../app/API';
 
 export default function ClientComponent({
   accessToken,
@@ -19,12 +18,10 @@ export default function ClientComponent({
   // optional: use configId from environment variable
   const configId = process.env['NEXT_PUBLIC_HUME_CONFIG_ID'];
   
-  
-  
   return (
     <div
       className={
-        "relative grow flex flex-col mx-auto w-full overflow-hidden h-[0px]"
+        "flex flex-col mx-auto w-full max-h-24"
       }
     >
       <VoiceProvider
@@ -50,7 +47,7 @@ export default function ClientComponent({
 
           if(message.type === "assistant_message") {
             console.log(message.message.content)
-            if (message.message.content.includes("dding") && message.message.content.includes("calories")) {
+            if (message.message.content.includes("Adding") && message.message.content.includes("calories")) {
               add_food(message.message.content);
               console.log("Food added to database")
             }

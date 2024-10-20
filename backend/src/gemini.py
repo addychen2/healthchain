@@ -13,7 +13,6 @@ class Food(typing.TypedDict):
     calories: int
     food_name: str
 
-
 def parse_calories(prompt):
     model = genai.GenerativeModel("gemini-1.5-flash")
     print("prompt: ")

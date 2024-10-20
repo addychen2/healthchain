@@ -6,8 +6,8 @@ import { Nav } from "@/components/Nav";
 import { cn } from "@/utils";
 
 export const metadata: Metadata = {
-  title: "Hume AI - EVI - Next.js Starter",
-  description: "A Next.js starter using Hume AI's Empathic Voice Interface",
+  title: "APP NAME",
+  description: "",
 };
 
 export default function RootLayout({
@@ -21,10 +21,9 @@ export default function RootLayout({
         className={cn(
           GeistSans.variable,
           GeistMono.variable,
-          "flex flex-col min-h-screen"
+          "flex flex-col grow min-h-screen bg-hume-orange"
         )}
       >
-        <Nav />
         {children}
       </body>
     </html>
