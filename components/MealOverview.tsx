@@ -6,6 +6,7 @@ import { get_all_food_uid } from '../app/API';
 
 interface FoodItem {
   calories: number;
+  protein: number;
   date: string;
   food_name: string;
 }
@@ -28,17 +29,15 @@ const MealOverview: React.FC = () => {
 
   return (
     <div className="bg-diet-green-dark rounded-xl shadow-lg p-6 w-full h-screen overflow-y-scroll">
-      <h2 className="text-xl text-white font-semibold mb-4">Last Week's Meals</h2>
+      <h2 className="text-xl text-white font-semibold mb-4">All Meals</h2>
       {meals.map((meal, index) => (
         <MealCard
+          meal={meal.food_name}
           key={index}
           date={meal.date}
           time="1" // You may need to add a time field to your FoodItem interface if available
-          meal={meal.food_name}
           calories={meal.calories}
-          protein={0} // Set to 0 or remove if not available in the API response
-          sugar={0} // Set to 0 or remove if not available in the API response
-          sodium={0} // Set to 0 or remove if not available in the API response
+          protein={meal.protein} // Set to 0 or remove if not available in the API response
         />
       ))}
     </div>

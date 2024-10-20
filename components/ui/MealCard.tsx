@@ -6,8 +6,6 @@ interface MealCardProps {
   meal: string;
   calories: number;
   protein: number;
-  sugar: number;
-  sodium: number;
 }
 
 const MealCard: React.FC<MealCardProps> = ({ date, time, meal, calories, protein }) => {
