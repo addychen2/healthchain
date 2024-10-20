@@ -4,6 +4,7 @@ import Card from "@/components/ui/Card";
 import { getHumeAccessToken } from "@/utils/getHumeAccessToken";
 import dynamic from "next/dynamic";
 import CalorieCard from "@/components/CalorieCard";
+import ProteinCard from "@/components/ProteinCard";
 
 
 
@@ -46,16 +47,9 @@ export default async function Page() {
 
       <div className="flex flex-col w-64 justify-evenly mx-10" >
 
-        <Card
+        <ProteinCard />
 
-          goalTitle="Protein Goal"
-          currentValue={80}
-          goalValue={100}
-          status="Below"
-        
-        />
-
-          <CalorieCard />
+        <CalorieCard />
 
 
         
