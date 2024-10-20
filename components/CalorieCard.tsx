@@ -1,56 +1,79 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Card from "./ui/Card";
 import { all_food_calories } from '../app/API';
 
 const CalorieCard: React.FC = () => {
   const [calorieData, setCalorieData] = useState({
     currentValue: 0,
-    goalValue: 2800, // Assuming the goal is static. If it's dynamic, you might want to fetch this as well.
+    goalValue: 2800,
   });
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchCalorieData = async () => {
-      try {
-        setIsLoading(true);
-        const response = await all_food_calories();
+  const calculateStatus = (current: number, goal: number): 'Below' | 'On Track' | 'Above' => {
+    const percentage = (current / goal) * 100;
+    if (percentage < 90) return 'Below';
+    if (percentage <= 110) return 'On Track';
+    return 'Above';
+  };
+
+  const fetchCalorieData = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      console.log('Fetching calorie data...');
+      const response = await all_food_calories();
+      console.log('Fetched calorie data:', response);
+      
+      if (response && response.all_food_calories && typeof response.all_food_calories === 'number') {
         const totalCalories = response.all_food_calories;
+        console.log('Setting total calories:', totalCalories);
         setCalorieData(prevData => ({
           ...prevData,
           currentValue: totalCalories,
         }));
         setError(null);
-      } catch (error) {
-        console.error('Error fetching calorie data:', error);
-        setError('Failed to fetch calorie data');
-      } finally {
-        setIsLoading(false);
+      } else {
+        console.error('Unexpected data structure:', response);
+        setError('Unexpected data structure');
       }
-    };
+    } catch (error) {
+      console.error('Error fetching calorie data:', error);
+      setError('Failed to fetch calorie data: ' + (error as Error).message);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
+  useEffect(() => {
     fetchCalorieData();
-  }, []); // Add refreshTrigger to the dependency array
 
-  const status = calorieData.currentValue > calorieData.goalValue ? "Above" : "Below";
+    // Set up event listener for foodAdded event
+    const handleFoodAdded = () => {
+      console.log('Food added event received, refreshing calorie data');
+      fetchCalorieData();
+    };
+    window.addEventListener('foodAdded', handleFoodAdded);
 
-  if (isLoading) {
-    return <div>Loading calorie data...</div>;
-  }
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('foodAdded', handleFoodAdded);
+    };
+  }, [fetchCalorieData]);
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  console.log('Rendering CalorieCard:', { calorieData, isLoading, error });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
-      <Card
-        goalTitle="Calorie Goal"
-        currentValue={calorieData.currentValue}
-        goalValue={calorieData.goalValue}
-        status={status}
-      />
+    <Card
+      goalTitle="Calories"
+      currentValue={calorieData.currentValue}
+      goalValue={calorieData.goalValue}
+      status={calculateStatus(calorieData.currentValue, calorieData.goalValue)}
+    />
   );
 };
 
