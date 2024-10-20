@@ -18,7 +18,7 @@ def main():
 		help="Server IP address to bind to.",
 		nargs="?",
 		type=str,
-		default="127.0.0.1",
+		default="0.0.0.0",
 	)
 	p.add_argument(
 		"port",
