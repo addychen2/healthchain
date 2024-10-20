@@ -109,13 +109,16 @@ def log_food():
     food_name = parsed_data[0]['food_name']
     calories = parsed_data[0]['calories']
 
+    print(food_name)
+    print(calories)
+
     # Basic validation to ensure all necessary data is provided
     if not all([food_name, calories]):
         return jsonify({'error': 'Missing required fields'}), 400
 
     try:
         # Create a new calTable entry 
-        new_entry = foodTable(food_name=food_name, calories=calories, date=date.today())
+        new_entry = foodCalTable(food_name=food_name, calories=calories, date=date.today())
 
         # Add the new entry to the session and commit it to the database
         db.session.add(new_entry)
