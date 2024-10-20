@@ -69,3 +69,23 @@ def calorie_limit(prompt):
     json_output = json.loads(response.candidates[0].content.parts[0].text)
     print(json_output)
     return json_output
+
+def protein_limit(prompt):
+    print("got to gemini!")
+    model = genai.GenerativeModel("gemini-1.5-pro")
+    print("prompt: ")
+    print(prompt["food"])
+
+    class limit(typing.TypedDict):
+        limit: int
+
+    response = model.generate_content(
+        "Find the protein limit for the following: " + prompt["food"],
+        generation_config=genai.GenerationConfig(
+        response_mime_type="application/json", response_schema=list[limit]
+        ),
+    )
+    print("gemini response:")
+    json_output = json.loads(response.candidates[0].content.parts[0].text)
+    print(json_output)
+    return json_output

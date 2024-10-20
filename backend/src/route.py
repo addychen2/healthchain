@@ -5,7 +5,7 @@ from datetime import date, datetime, timedelta
 from flask_jwt_extended import create_access_token, jwt_required, JWTManager
 
 import bcrypt
-from gemini import parse_calories, parse_removal, calorie_limit
+from gemini import parse_calories, parse_removal, calorie_limit, protein_limit
 
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -378,9 +378,50 @@ def set_target_calories_ai():
     
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/api/set_target_protein_ai', methods=['POST'])
+def set_target_protein_ai():
+    print("Inside set_target_protein_ai")
+    data = request.get_json()
+    user_id = data.get('user_id')
+
+    print(data)
+    parsed_data = protein_limit(data)
+
+    print("parsed data: ")
+    print(parsed_data)
+
+    # Extract the necessary fields
+    pro_target = parsed_data[0]['limit']
+
+    print(pro_target)
+
+    # Basic validation to ensure all necessary data is provided
+
+    if not all([user_id, pro_target]):
+        print("Missing required fields")
+        return jsonify({'error': 'Missing required fields'}), 400
     
+    try:
+        # Check if a target for this user already exists
+        target_entry = proTarget.query.filter_by(user_id=user_id).first()
 
+        if target_entry:
+            # Update the existing entry if it exists
+            target_entry.pro_target = pro_target
+        else:
+            # Create a new entry if one doesn't exist
+            target_entry = proTarget(user_id=user_id, pro_target=pro_target)
+            db.session.add(target_entry)
 
+        # Commit the changes to the database
+        db.session.commit()
+
+        return jsonify({'message': 'Target protein set successfully'}), 201
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
 
 
 @app.route('/api/get_target_calories', methods=['GET', 'POST'])

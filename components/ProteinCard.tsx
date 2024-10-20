@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Card from "./ui/Card";
 import { daily_protein, get_target_protein} from '../app/API'; // Assuming these API functions exist
+import CardGrams from './ui/CardGrams';
 
 const ProteinCard: React.FC = () => {
   const [proteinData, setProteinData] = useState({
@@ -38,8 +39,8 @@ const ProteinCard: React.FC = () => {
 
         let targetProtein = 50; // Default value if targetProtein API fails
 
-        if (responseTarget && typeof responseTarget.protein_target === 'number') {
-          targetProtein = responseTarget.protein_target;
+        if (responseTarget && typeof responseTarget.pro_target === 'number') {
+          targetProtein = responseTarget.pro_target;
         } else {
           console.error('Unexpected target protein data structure:', responseTarget);
           setError('Failed to fetch target protein');
@@ -85,7 +86,7 @@ const ProteinCard: React.FC = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <Card
+    <CardGrams
       goalTitle="Protein"
       currentValue={proteinData.currentValue}
       goalValue={proteinData.goalValue}
