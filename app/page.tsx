@@ -1,3 +1,4 @@
+import ChatText from "@/components/ChatText";
 import SideNav from "@/components/SideNav";
 import Card from "@/components/ui/Card";
 import { getHumeAccessToken } from "@/utils/getHumeAccessToken";
@@ -9,6 +10,8 @@ import dynamic from "next/dynamic";
 const Chat = dynamic(() => import("@/components/Chat"), {
   ssr: true,
 });
+
+
 
 export default async function Page() {
   const accessToken = await getHumeAccessToken();
@@ -30,8 +33,14 @@ export default async function Page() {
       </div>
 
       <div className=" grow flex-col h-max inset-0 ">
+        <h1 className="text-3xl font-sans text-center content-end h-96 my-5 ">
+          Share your Meals and We'll Track 'em
+        </h1>
         
-        <Chat accessToken={accessToken}/>
+          
+
+        <Chat accessToken={accessToken} />
+        
         
       </div>
 
