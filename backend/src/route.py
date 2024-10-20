@@ -375,7 +375,7 @@ def get_all_food_uid():
 @app.route('/api/all_food_calories', methods=['GET'])
 def get_all_food_calories():
     # Query the foodTable to get all food entries
-    food_entries = foodCalTable.query.all()
+    food_entries = calTable.query.all()
 
     # Prepare a list to store the results
     all_food_calories = 0
