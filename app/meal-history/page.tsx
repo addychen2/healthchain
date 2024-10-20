@@ -19,10 +19,12 @@ export default function Page(){
             </div>
 
             <div className="flex flex-col w-64 justify-evenly mx-10" >
+            
+            <ProteinCard />
 
             <CalorieCard />
 
-           <ProteinCard />
+           
 
         
         </div>
