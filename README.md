@@ -1,15 +1,21 @@
 <div align="center">
-  <img src="https://storage.googleapis.com/hume-public-logos/hume/hume-banner.png">
-  <h1>EVI Next.js App Router Example</h1>
+  <img src="public/logo.png">
 </div>
 
-![preview.png](preview.png)
+
+
+![Preview](preview.png)
+
 
 # HealthChain
 
 ## Overview
+HealthChain is your dedicated AI personal trainer, powered by Hume.ai emotional intelligence technology. It adapts to your feelings and motivations, providing personalized fitness and nutrition plans with the help of Google Gemini's parsing and structured data features. Unlike typical AI trainers that offer generic advice, HealthChain understands when you're unmotivated or stressed, offering timely encouragement to keep you on track.
 
-This project features a sample implementation of Hume's [Empathic Voice Interface](https://hume.docs.buildwithfern.com/docs/empathic-voice-interface-evi/overview) using Hume's React SDK. Here, we have a simple EVI that uses the Next.js App Router.
+## **Authors and Acknowledgment**
+
+HealthChain was created by **[Addy](https://github.com/addychen2), [Derek](https://github.com/dwstan), [Joshua](https://github.com/NumerousJLs), and [Steven](https://github.com/sanityl0st),**.
+
 
 ## Project Local Run Instructions
 ```
