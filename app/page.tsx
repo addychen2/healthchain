@@ -1,13 +1,15 @@
-import { Nav } from "@/components/Nav";
-import SideNav from "@/components/SideNav";
 import { getHumeAccessToken } from "@/utils/getHumeAccessToken";
 import dynamic from 'next/dynamic'
+import { useEffect } from 'react'
+
 const CalorieCard = dynamic(() => import('@/components/CalorieCard'), { ssr: false });
 const ProteinCard = dynamic(() => import('@/components/ProteinCard'), { ssr: false });
 const HeaderAndChat = dynamic(() => import('@/components/HeaderAndChat'), { ssr: false });
+const SideNav = dynamic(() => import('@/components/SideNav'), { ssr: false });
 
 
 export default async function Page() {
+
   const accessToken = await getHumeAccessToken();
   
   if (!accessToken) {
@@ -18,7 +20,6 @@ export default async function Page() {
     <div className="grow flex flex-row h-screen">
       <div className="grow flex flex-col h-screen">
         <div className="hidden">
-          <Nav/>
         </div>
         <SideNav/>
       </div>
