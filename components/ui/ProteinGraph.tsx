@@ -54,7 +54,7 @@ const ProteinGraphCard: React.FC = () => {
 
         // Fetch weekly protein data
         try {
-            const response = await fetch(`http://localhost:8080/api/weekly_protein?user_id=${userId}`, {
+            const response = await fetch(`https://addisonchen.pythonanywhere.com/api/weekly_protein?user_id=${userId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ const ProteinGraphCard: React.FC = () => {
             const protein = weeklyData.daily_protein.map((entry: DailyProteinEntry) => entry.total_protein).reverse();  // Reverse the data
 
             // Fetch target protein
-            const targetResponse = await fetch(`http://localhost:8080/api/get_target_protein?user_id=${userId}`, {
+            const targetResponse = await fetch(`https://addisonchen.pythonanywhere.com/api/get_target_protein?user_id=${userId}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
