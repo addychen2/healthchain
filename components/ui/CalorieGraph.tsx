@@ -53,7 +53,7 @@ const CalorieGraphCard: React.FC = () => {
         const userId = Cookies.get("user_id");
 
         // Fetch weekly calories
-        const response = await fetch(`http://localhost:8080/api/weekly_calories?user_id=${userId}`, {
+        const response = await fetch(`https://addisonchen.pythonanywhere.com/api/weekly_calories?user_id=${userId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ const CalorieGraphCard: React.FC = () => {
         const calories = weeklyData.daily_calories.map((entry: DailyCalorieEntry) => entry.total_calories).reverse();
 
         // Fetch target protein/calories
-        const targetResponse = await fetch(`http://localhost:8080/api/get_target_calories?user_id=${userId}`, {
+        const targetResponse = await fetch(`https://addisonchen.pythonanywhere.com//api/get_target_calories?user_id=${userId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
