@@ -1,4 +1,4 @@
-const ADDRESS = "http://localhost:8080";
+const ADDRESS = "https://addisonchen.pythonanywhere.com/";
 import Cookies from "js-cookie";
 
 let refreshCallback = null;

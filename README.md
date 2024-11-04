@@ -44,6 +44,19 @@ Below are the steps to completing deployment:
 1. Create a Git Repository for your project.
 2. Provide the required environment variables. To get your API key and Client Secret key, log into the portal and visit the [API keys page](https://beta.hume.ai/settings/keys).
 
+## Deployment Bug Commands
+
+```
+# if node version if out of date
+nvm install node
+
+corepack enable pnpm     
+
+pnpm install
+# or
+pnpm install --no-frozen-lockfile
+```
+
 ## Support
 
 If you have questions, require assistance, or wish to engage in discussions pertaining to this starter template, [please reach out to us on Discord](https://link.hume.ai/discord).
